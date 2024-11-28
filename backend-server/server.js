@@ -259,7 +259,6 @@ app.get('/verify-token', auth, async (req, res) => {
 });
 
 app.post('/logout', auth, (req, res) => {
-
   res.status(200).json({ message: 'Logged out successfully' });
 
 });

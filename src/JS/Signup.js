@@ -18,7 +18,7 @@ const Signup = ({ toggleForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(userDetails);
+        //console.log(userDetails);
         try {
             await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
             toggleForm();
