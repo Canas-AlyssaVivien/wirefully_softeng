@@ -8,6 +8,7 @@ const Signup = ({ toggleForm }) => {
         password: ''
     });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,12 +19,41 @@ const Signup = ({ toggleForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //console.log(userDetails);
+        
+        setError('');
+
+        if (!userDetails.email || !userDetails.password) {
+            setError('Both email and password are required.');
+            return;
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(userDetails.email)) {
+            setError('Please enter a valid email address (e.g., example@example.com).');
+            return;
+        }
+
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!passwordPattern.test(userDetails.password)) {
+            setError('Password must be at least 8 characters long and contain both letters and numbers.');
+            return;
+        }
+
+        setIsLoading(true);
+
         try {
             await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
             toggleForm();
-        } catch (error) {
-            setError(error.response?.data?.message || 'An error occurred. Please try again.');
+        } catch (err) {
+            if (err.response) {
+                setError(err.response.data.message || 'An error occurred. Please try again.');
+            } else if (err.request) {
+                setError('Network error. Please check your connection and try again.');
+            } else {
+                setError('An unexpected error occurred. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -50,7 +80,7 @@ const Signup = ({ toggleForm }) => {
                     required 
                 />
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit" disabled={isLoading}> {isLoading ? 'Signing Up...' : 'Sign Up'}</button>
         </form>
     );
 };
