@@ -184,10 +184,14 @@ function Dashboard() {
                     <h3>Output:</h3>
                         <div className="output-box">
                         {isLoading ? (
-                                <div className="loading-container">
-                                    <p className="loading-message">AI is generating the wireframes!</p>
-                                    <div className="loading-spinner"></div>
-                                </div>
+                               <div className="horizontal-spinner-container">
+                               <p className="horizontal-spinner-message">AI is generating the wireframes!</p>
+                                <div class="fancy-spinner">
+                                    <div class="bubble"></div>
+                                    <div class="bubble"></div>
+                                    <div class="bubble"></div>
+                                    </div>
+                                 </div>
                             ) : showXML ? (
                                 <pre className="xml-content">
                                     {xmlResponse ? xmlResponse : 'No XML generated yet.'}
