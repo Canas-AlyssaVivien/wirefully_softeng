@@ -15,9 +15,10 @@ function Dashboard() {
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [history, setHistory] = useState([]);
     const htmlPreviewRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [showXML, setShowXML] = useState(false);
-    const { token, logout } = useAuth();
+    const { token, logout} = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -26,6 +27,7 @@ function Dashboard() {
     };
 
     const handleGenerate = async (diagramData) => {
+        setIsLoading(true);
         try {
             const response = await fetch("https://wirefully-backend0.onrender.com/generate-content", {
                 method: "POST",
@@ -67,6 +69,8 @@ function Dashboard() {
             }
         } catch (error) {
             setErrorMessage(`Error during API request: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
     
@@ -166,7 +170,7 @@ function Dashboard() {
                 </div>
             </div>
             {isHistoryVisible ? (
-                <HistoryScreen history={history} /> 
+                <HistoryScreen history={history} />
             ) : (
             <div className='Display-Main'>
                 <div className='column1'>
@@ -177,10 +181,17 @@ function Dashboard() {
                 </div>
                 <div className='column2'>
                     <div className='inside-column2'>
-                        <h3>Output: </h3>
+                    <h3>Output:</h3>
                         <div className="output-box">
-                            {showXML ? (
-                                <pre className="xml-content" >{xmlResponse ? xmlResponse : 'No XML generated yet.'}</pre>
+                        {isLoading ? (
+                                <div className="loading-container">
+                                    <p className="loading-message">AI is generating the wireframes!</p>
+                                    <div className="loading-spinner"></div>
+                                </div>
+                            ) : showXML ? (
+                                <pre className="xml-content">
+                                    {xmlResponse ? xmlResponse : 'No XML generated yet.'}
+                                </pre>
                             ) : (
                                 <div className="html-preview-content" ref={htmlPreviewRef}>
                                     {htmlPreview ? parse(htmlPreview) : 'Create your own use case diagram'}
