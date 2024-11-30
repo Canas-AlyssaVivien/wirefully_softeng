@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import '../CSS/HistoryScreen.css';
 
 function HistoryScreen({ history }) {
     const [expandedIndex, setExpandedIndex] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 4000);
+        return () => clearTimeout(timer);
+    }, [history]);
 
     const toggleDetails = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
@@ -13,8 +19,18 @@ function HistoryScreen({ history }) {
     return (
         <div className="history-container">
             <h2>Generation History</h2>
-            {Array.isArray(history) && history.length === 0 ? (
-                <p>No history available.</p>
+            {isLoading ? (
+                <div className="spinner-container">
+                    <div className="bubbles-spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            ) : Array.isArray(history) && history.length === 0 ? (
+                <p className='nw'>NO HISTORY AVAILABLE</p>
             ) : (
                 <ul className="history-list">
                     {history.map((item, index) => (

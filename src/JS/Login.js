@@ -6,6 +6,7 @@ const Login = () => {
     const { login } = useAuth();
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -16,12 +17,14 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //console.log('Login attempt with:', credentials);
+        setIsLoading(true);
         try {
             await login(credentials);
             navigate('/home');
         } catch (error) {
             setError(error.response?.data?.message || 'An error occurred. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };    
 
@@ -48,7 +51,7 @@ const Login = () => {
                     required 
                 />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Log in'}</button>
         </form>
     );
 };
