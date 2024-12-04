@@ -33,7 +33,7 @@ const Signup = ({ toggleForm }) => {
             return;
         }
 
-        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
         if (!passwordPattern.test(userDetails.password)) {
             setError('Password must be at least 8 characters long and contain both letters and numbers.');
             return;

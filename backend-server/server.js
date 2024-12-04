@@ -48,8 +48,8 @@ const auth = (req, res, next) => {
   }
 };
 
-//app.use(cors({ origin: 'http://localhost:8000' }));
-app.use(cors({ origin: 'https://wirefullysofteng-0.onrender.com' }));
+app.use(cors({ origin: 'http://localhost:8000' }));
+//app.use(cors({ origin: 'https://wirefullysofteng-0.onrender.com' }));
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -184,7 +184,6 @@ app.post('/save-history', auth, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 
 app.get('/get-history', auth, async (req, res) => {
   try {
