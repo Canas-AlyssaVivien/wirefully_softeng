@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../CSS/Signup.css';
 
-const Signup = ({ toggleForm }) => {
+const Signup = () => {
     const [userDetails, setUserDetails] = useState({
         email: '',
+        username: '',
         password: ''
     });
+
+    const [verifypass, setVerifypass] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const handleVerifyPassChange = (e) => {
+        setVerifypass(e.target.value);
+    };    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,17 +41,22 @@ const Signup = ({ toggleForm }) => {
             return;
         }
 
-        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
         if (!passwordPattern.test(userDetails.password)) {
             setError('Password must be at least 8 characters long and contain both letters and numbers.');
+            return;
+        }
+
+        if (userDetails.password !== verifypass) {
+            setError('Passwords do not match. Please try again.');
             return;
         }
 
         setIsLoading(true);
 
         try {
-            await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
-            toggleForm();
+            await axios.post('http://localhost:3000/signup', userDetails);
+            //await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
         } catch (err) {
             if (err.response) {
                 setError(err.response.data.message || 'An error occurred. Please try again.');
@@ -57,30 +70,69 @@ const Signup = ({ toggleForm }) => {
         }
     };
 
+    const handleBackClick = () => {
+        navigate('/');
+    };
+
     return (
         <form onSubmit={handleSubmit}>
-            {error && <p style={{ color: 'red', fontSize: '12px', marginBottom: '10px' }}>{error}</p>}
-            <div className='input-group'>
-                <label htmlFor="email">Email</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    value={userDetails.email} 
-                    onChange={handleChange} 
-                    required 
-                />
+            <div className='SignUp'>
+                <button type="button" className="back-button" onClick={handleBackClick}>
+                    ← Back
+                </button>
+                <h1 className='Signup-h1'>Create your account</h1>
+                {error && <p style={{ color: 'red', fontSize: '12px', marginBottom: '10px' }}>{error}</p>}
+                <div className='input-group'>
+                    <label htmlFor="email">Email</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        value={userDetails.email} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                </div>
+                <div className='input-group'>
+                    <label htmlFor="username">Username</label>
+                    <input 
+                        type="text" 
+                        name="username" 
+                        value={userDetails.username} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                </div>
+                <div className='input-group'>
+                    <label htmlFor="password">Password</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        value={userDetails.password} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                </div>
+                <div className='input-group'>
+                    <label htmlFor="verifypass">Verify Password</label>
+                    <input 
+                        type="password" 
+                        name="verifypass" 
+                        value={verifypass} 
+                        onChange={handleVerifyPassChange} 
+                        required 
+                    />
+                </div>
+                <button className='Signup-button' type="submit" disabled={isLoading}> {isLoading ? 'Signing Up...' : 'Sign Up'}</button>
+                <p className='Signup-p'>
+                    Already have an account? {" "}
+                    <span 
+                        className='login-link' 
+                        onClick={() => navigate('/login')}
+                    >
+                        Log In
+                    </span>
+                </p>
             </div>
-            <div className='input-group'>
-                <label htmlFor="password">Password</label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    value={userDetails.password} 
-                    onChange={handleChange} 
-                    required 
-                />
-            </div>
-            <button type="submit" disabled={isLoading}> {isLoading ? 'Signing Up...' : 'Sign Up'}</button>
         </form>
     );
 };

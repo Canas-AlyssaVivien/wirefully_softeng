@@ -19,6 +19,7 @@ mongoose.connect(MONGODB_URI, {
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 
@@ -203,16 +204,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
 
   try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email, username });
       if (user) {
           return res.status(400).json({ message: 'User already exists' });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      user = new User({ email, password: hashedPassword });
+      user = new User({ email, username, password: hashedPassword });
       await user.save();
 
       res.status(201).json(console.log("User added!"));

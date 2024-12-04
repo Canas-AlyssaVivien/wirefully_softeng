@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Signup from './Signup';
-import Login from './Login';
+import { useNavigate } from 'react-router-dom';
 import '../CSS/Landing.css';
 import logo from '../CSS/1.png';
 import wait from '../CSS/wait.gif';
@@ -10,6 +9,15 @@ import done from '../CSS/done.gif';
 
 const Landing = () => {
     const [isLogin, setIsLogin] = useState(false);
+    const navigate = useNavigate();
+
+    const handleStartNowClick = () => {
+        navigate('/signup');
+    };
+
+    const handleLogInClick = () => {
+        navigate('/login');
+    };
 
     document.addEventListener("scroll", function () {
         const contentBox = document.querySelector('.content-box');
@@ -31,7 +39,7 @@ const Landing = () => {
                     <img src={logo} className="App-logo" alt="logo" />
                 </div>
                 <div className='Navbar-right'>
-                    <button className='type-two'>Log In</button>
+                    <button className='type-two' onClick={handleLogInClick}>Log In</button>
                 </div>
             </div>
             <div className='rectangle'>
@@ -62,7 +70,7 @@ const Landing = () => {
                         <p>
                             From Use Case to Wireframe in Minutes – Simplify Your App Design Journey with WireFully!
                         </p>
-                        <button className='start-button'>Start Now</button>
+                        <button className='start-button' onClick={handleStartNowClick}>Start Now</button>
                     </div>
                 </section>
 

@@ -1,0 +1,116 @@
+form {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SignUp {
+    padding: 50px;
+    
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: normal;
+    color: black;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 500px;
+    height: 30px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background-color: #F5F5F7;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    border: 2px solid #F5F5F7;
+
+    margin-bottom: 25px;
+}
+
+input:focus {
+    box-shadow: 0 0 10px rgba(3, 52, 110, 0.5);
+    border: 2px solid #03346E;
+}
+
+.Signup-button {
+    width: 200px;
+    background-color: #03346E;
+    color: white;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Signup-button:hover {
+    background-color: #E2E2B6;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    color: black;
+}
+
+.Signup-h1 {
+    align-self: center;
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.Signup-p {
+    font-size: 13px;
+    font-weight: normal;
+    align-self: center;
+    margin-top: 15px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #03346E;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.5s ease;
+    display: flex;
+    align-self: flex-start;
+    gap: 5px;
+}
+
+.back-button:hover {
+    transform: translateX(-5px);
+}
+
+.back-button:active {
+    transform: translateX(-10px);
+}
+
+.login-link {
+    color: #03346E;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.5s ease;
+}
+
+.login-link:hover {
+    transform: scale(1.1);
+    font-weight: bold;
+}
+

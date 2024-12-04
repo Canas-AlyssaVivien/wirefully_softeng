@@ -40,59 +40,6 @@
     align-items: center;
 }
 
-/*LOG IN*/
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 70%;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-label {
-    margin-bottom: 50px; 
-    font-weight: bold;
-    color: black;
-    font-size: 10px;
-}
-
-input {
-    width: 100%;
-    height: 12px;
-    padding: 10px;
-    border: 2px solid #001F3F;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    outline: none;
-    font-size: 12px;
-}
-
-input:focus {
-    border-color: #001F3F; 
-    box-shadow: 0 0 5px rgba(0, 31, 63, 0.5);
-}
-
-button {
-    width: 100px;
-    padding: 8px;
-    font-size: 13px;
-    margin-top: 20px;
-    background-color: black; 
-    color: white; 
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: center;
-}
-
-button:hover {
-    background-color: white;
-    color: black;
-}
-
 /*NAVBAR*/
 
 .NavBar {
@@ -147,7 +94,7 @@ button:hover {
     cursor: pointer;
     position: relative;
     color: black;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.5s ease, transform 0.5s ease;
 
     font-weight: 600;
 }
@@ -161,11 +108,11 @@ button:hover {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -5px;
     width: 0;
-    height: 2px;
+    height: 3px;
     background: #03346E;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
 }
 
 .Navbar-right button:hover::after {
@@ -223,12 +170,14 @@ section {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
 }
 
 .start-button:hover {
     background-color: #E2E2B6;
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    color: black;
 }
 
 .start-button:focus {
