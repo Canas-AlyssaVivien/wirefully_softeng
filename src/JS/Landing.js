@@ -76,7 +76,7 @@ const Landing = () => {
 
                 <section className="about-section">
                     <div className="content-box">
-                    <h2>Your <span class="highlight">Wireframe</span> Journey Starts Here!</h2>
+                    <h2>Your <span className="highlight">Wireframe</span> Journey Starts Here!</h2>
                     <p>
                         Ready to turn your big ideas into sleek, professional app designs? With WireFully, creating your app’s blueprint is as easy as a few clicks.  
                         Whether you're a first-time creator or a seasoned pro, our magical tools transform your use case diagrams into wireframes and XML code—quickly and effortlessly!  
