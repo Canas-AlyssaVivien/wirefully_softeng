@@ -183,16 +183,6 @@ section {
     text-align: center;
 }
 
-section {
-    opacity: 0.5; /* Initially set to 50% opacity */
-    transition: opacity 0.3s ease-in-out;
-}
-
-/* When fully visible, set opacity to 1 (100%) */
-section.visible {
-    opacity: 1;
-}
-
 /* Hero Section */
 .hero-section {
     background-color: none;
@@ -263,17 +253,32 @@ section.visible {
 
 /* About Section */
 .about-section {
-    max-width: 1000px;
-    max-height: 500px;
-    background-color: rgba(255, 255, 255, 0.4);
-    color: #333;
-    border-radius: 25px;
-    padding: 40px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin: 60px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.content-box {
+    height: 100vh;
+    background-color: white;
+    padding: 80px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    opacity: 0.5;
+    transform: scale(0.7);
+    transition: transform 1.5s ease, opacity 1.5s ease;
+}
+
+.highlight {
+    color: #03346E;
+    font-weight: bold;
+}
+
+.content-box.visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .about-section h2 {
@@ -285,6 +290,7 @@ section.visible {
     font-size: 20px;
     line-height: 1.8;
     margin-top: 20px;
+    color: #666;
 }
 
 /* How It Works Section */
@@ -311,13 +317,17 @@ section.visible {
 .card {
     background-color: #fff;
     border-radius: 20px;
-    padding: 20px;
+    padding: 40px;
     width: 300px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     cursor: pointer;
     font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -341,71 +351,16 @@ section.visible {
     transform: translateY(2px); 
 }
 
-/* About Us Section */
-.about-us-section {
-    background-color: none;
-    color: #333;
-    padding: 50px 20px;
-    text-align: center;
-}
-
-.about-us-section h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #03346E;
-}
-
-.about-us-section p {
-    font-size: 18px;
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto 40px;
-}
-
-.team {
+.emoticon-container {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
 }
 
-.developer-card {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    width: 250px; /* Adjust the width of each card */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.developer-card:hover {
-    transform: translateY(-10px); /* Lift effect on hover */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-}
-
-.developer-card:active {
-    transform: translateY(2px); /* Simulate a press effect when clicked */
-}
-
-.developer-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-}
-
-.developer-card h3 {
-    font-size: 20px;
-    color: #03346E;
-    margin-bottom: 10px;
-}
-
-.developer-card p {
-    font-size: 14px;
-    color: #666;
+.emoticon {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
 }
 
 /*SCROLL*/
