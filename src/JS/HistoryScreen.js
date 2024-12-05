@@ -8,7 +8,7 @@ function HistoryScreen({ history }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 4000);
+        const timer = setTimeout(() => setIsLoading(false), 3000);
         return () => clearTimeout(timer);
     }, [history]);
 
@@ -16,9 +16,13 @@ function HistoryScreen({ history }) {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
 
+    function closeOverlay() {
+        toggleDetails(null);
+    }
+
     return (
         <div className="history-container">
-            <h2>Generation History</h2>
+            <h1>Creation History</h1>
             {isLoading ? (
                 <div className="spinner-container">
                     <div className="loader">
@@ -37,28 +41,38 @@ function HistoryScreen({ history }) {
                                 Use Case Diagram & Wireframe {index + 1}
                             </button>
                             {expandedIndex === index && (
-                                <div className="history-details">
-                                    <div className="use-case-diagram-container diagram-container">
-                                        <strong>USE CASE DIAGRAM</strong>
-                                        {item.diagram ? ( <img src={item.diagram}/>
+                                <div className="overlayy">
+                                <div className="overlayy-content">
+                                    <button className="closer-button" onClick={closeOverlay}>
+                                        &times;
+                                    </button>
+                                    <div className="overlayy-scroll-container">
+                                    <div className="history-details">
+                                        <div className="use-case-diagram-container diagram-container">
+                                            <strong>USE CASE DIAGRAM</strong>
+                                            {item.diagram ? (
+                                                <img src={item.diagram} alt="Use Case Diagram" />
                                             ) : (
                                                 <p>No diagram available.</p>
                                             )}
-                                    </div>
-                                    <div className="bord xml-container">
-                                        <strong>XML CODE</strong>
-                                        <pre>{item.xml}</pre>
-                                    </div>
-                                    <div className="bord html-container">
-                                        <strong>HTML PREVIEW</strong>
-                                        <div className="html-preview">
-                                            {item.html ? parse(item.html) : <p>No HTML content available.</p>}
+                                        </div>
+                                        <div className="bord html-container">
+                                            <strong>WIREFRAME</strong>
+                                            <div className="html-preview">
+                                                {item.html ? parse(item.html) : <p>No HTML content available.</p>}
+                                            </div>
+                                        </div>
+                                        <div className="bord xml-container">
+                                            <strong>XML CODE</strong>
+                                            <pre>{item.xml}</pre>
+                                        </div>
+                                        <div className="timestamp">
+                                            <em>Generated on: {item.timestamp}</em>
                                         </div>
                                     </div>
-                                    <div className="timestamp">
-                                        <em>Generated on: {item.timestamp}</em>
                                     </div>
                                 </div>
+                            </div>
                             )}
                         </li>
                     ))}
