@@ -18,28 +18,6 @@
     align-items: center;
 }
 
-.left-column {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-
-.left-column p {
-    color: black;
-    font-size: 13px;
-}
-
-.right-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 /*NAVBAR*/
 
 .NavBar {
@@ -47,17 +25,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
 
     position: fixed;
     top: 0;
     width: 100%;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
     z-index: 10;
+
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.NavBar.scrolled {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
 }
   
 .NavBar-left, .Navbar-right {
@@ -157,6 +140,7 @@ section {
     font-size: 1rem;
     margin-top: 20px;
     margin-bottom: 10px;
+    color: black;
 }
 
 .start-button {
@@ -242,6 +226,12 @@ section {
     color: #666;
 }
 
+.hero-emoticon {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+
 /* How It Works Section */
 .how-it-works-section {
     background-color: none;
@@ -251,12 +241,18 @@ section {
 
 .how-it-works-section h2 {
     font-size: 32px;
-    margin-bottom: 50px;
-    font-weight: bold;
     color: black;
+    font-weight: normal;
+    margin-top: 100px;
+}
+
+.white-hightlight {
+    color: white;
+    font-weight: bold;
 }
 
 .cards {
+    margin-top: 80px;
     display: flex;
     justify-content: center;
     gap: 30px;

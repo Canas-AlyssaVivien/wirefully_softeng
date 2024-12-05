@@ -55,7 +55,8 @@ const Signup = () => {
         setIsLoading(true);
 
         try {
-            await axios.post('http://localhost:3000/signup', userDetails);
+            await axios.post('http://localhost:8000/signup', userDetails);
+            navigate('/login');
             //await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
         } catch (err) {
             if (err.response) {
