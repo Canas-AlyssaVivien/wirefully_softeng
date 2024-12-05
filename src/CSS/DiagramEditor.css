@@ -1,6 +1,6 @@
 .buttona, .gbutton{
     background-color: #001F3F;
-    border: 2px solid #001F3F;
+    border: none;
     color: white;
     padding: 8px 3px;
     text-align: center;
@@ -26,33 +26,29 @@
     width: 100%;
     display: flex;
     justify-content: center; 
-    gap: 5px; 
+    gap: 5px;
+    margin-bottom: 10px;
 }
 
 .toolbar-input {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 8px;
     margin-bottom: 5px;
 }
 
 .gbutton {
-    width: 95px;
+    width: 112px;
     border: none;
-    font-size: 12px;
-}
-
-.gbutton:hover {
-    background-color: white;
-    border: none;
-    color: #001F3F;
+    height: 32px;
 }
   
-.buttona:hover {
-    background-color: white;
+.buttona:hover, .gbutton:hover {
+    background-color: #E2E2B6;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    color: black;
     border: none;
-    color: #001F3F;
 }
 
 #maonajudniboss.editorr {
@@ -62,6 +58,17 @@
     margin-top: 8px;
     margin-bottom: 10px;
     position: relative;
+
+    background-color: white;
+    background-image: 
+        linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+        linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+    
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 
+                inset 0 -4px 6px rgba(0, 0, 0, 0.2), 
+                inset 4px 0 6px rgba(0, 0, 0, 0.02), 
+                inset -4px 0 6px rgba(0, 0, 0, 0.02);
 }
   
 .system-name-input {
@@ -71,7 +78,7 @@
     border-radius: 4px;
     display: block;
     opacity: 1;
-    max-width: 580px;
+    width: 580px;
 }
 
 .diagram {
@@ -88,7 +95,19 @@
 }
 
 .generate-button {
-    width: 610px;
+    width: 605px;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.Element-input-box {
+    flex-grow: 1;
+
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #001F3F;
+    border-radius: 4px;
+    display: block;
 }

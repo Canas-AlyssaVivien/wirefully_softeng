@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Signup.css';
 
+import back from '../CSS/left.png';
+
 const Signup = () => {
     const [userDetails, setUserDetails] = useState({
         email: '',
@@ -78,8 +80,11 @@ const Signup = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div className='SignUp'>
-                <button type="button" className="back-button" onClick={handleBackClick}>
-                    ← Back
+                <button className='Back-container'  onClick={handleBackClick}>
+                    <img src={back} />
+                    <button type="button" className="back-button">
+                        Back
+                    </button>
                 </button>
                 <h1 className='Signup-h1'>Create your account</h1>
                 {error && <p style={{ color: 'red', fontSize: '12px', marginBottom: '10px' }}>{error}</p>}
@@ -89,7 +94,8 @@ const Signup = () => {
                         type="email" 
                         name="email" 
                         value={userDetails.email} 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        className='Signup-input'
                         required 
                     />
                 </div>
@@ -99,7 +105,8 @@ const Signup = () => {
                         type="text" 
                         name="username" 
                         value={userDetails.username} 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        className='Signup-input'
                         required 
                     />
                 </div>
@@ -110,6 +117,7 @@ const Signup = () => {
                         name="password" 
                         value={userDetails.password} 
                         onChange={handleChange} 
+                        className='Signup-input'
                         required 
                     />
                 </div>
@@ -119,7 +127,8 @@ const Signup = () => {
                         type="password" 
                         name="verifypass" 
                         value={verifypass} 
-                        onChange={handleVerifyPassChange} 
+                        onChange={handleVerifyPassChange}
+                        className='Signup-input'
                         required 
                     />
                 </div>

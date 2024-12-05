@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Signup.css';
+import back from '../CSS/left.png';
 
 const Login = () => {
     const { login } = useAuth();
@@ -36,8 +37,11 @@ const Login = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div className='SignUp'>
-                <button type="button" className="back-button" onClick={handleBackClick}>
-                    ← Back
+                <button className='Back-container'  onClick={handleBackClick}>
+                    <img src={back} />
+                    <button type="button" className="back-button">
+                        Back
+                    </button>
                 </button>
                 <h1 className='Signup-h1'>Log into your account</h1>
                 {error && <p style={{ color: 'red', fontSize: '12px', marginBottom: '10px' }}>{error}</p>}
@@ -47,7 +51,8 @@ const Login = () => {
                         type="email" 
                         name="email" 
                         value={credentials.email} 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        className='Signup-input'
                         required 
                     />
                 </div>
@@ -57,7 +62,8 @@ const Login = () => {
                         type="password" 
                         name="password" 
                         value={credentials.password} 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        className='Signup-input'
                         required 
                     />
                 </div>

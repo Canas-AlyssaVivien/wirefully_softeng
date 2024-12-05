@@ -3,7 +3,6 @@ import * as joint from 'jointjs';
 import '../CSS/DiagramEditor.css';
 import ErrorModal from './ErrorModal';
 import '../CSS/ErrorModal.css';
-import html2canvas from 'html2canvas';
 
 const DiagramEditor = ({onGenerate}) => {
   const diagramRef = useRef(null);
@@ -16,6 +15,14 @@ const DiagramEditor = ({onGenerate}) => {
   const [SystemName, setSystemName] = useState('');
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [currentElement, setCurrentElement] = useState(null);
+  const [isRelationshipInputVisible, setIsRelationshipInputVisible] = useState(false);
+  const [relationshipValue, setRelationshipValue] = useState('');
+  const [sourceElement, setSourceElement] = useState(null);
+  const [targetElement, setTargetElement] = useState(null);
+  const graph = new joint.dia.Graph();
 
   /*const exportDiagramToText = async () => {
     try {
@@ -100,7 +107,6 @@ const DiagramEditor = ({onGenerate}) => {
   };
 
   useEffect(() => {
-    const graph = new joint.dia.Graph();
     graphRef.current = graph;
 
     const paper = new joint.dia.Paper({
@@ -243,6 +249,19 @@ const DiagramEditor = ({onGenerate}) => {
 
     const addBrokenArrow = () => {
       if (selectedElements.current.length === 2) {
+        //if (sourceElement && targetElement) {
+          setIsRelationshipInputVisible(true);
+        /*} else {
+          console.error('Invalid source or target element for the link.');
+        }*/
+      } else {
+        setErrorMessage('Please select two elements to connect with a Broken Arrow.');
+        setIsErrorVisible(true);
+      }
+    };
+
+    /*const addBrokenArrow = () => {
+      if (selectedElements.current.length === 2) {
         const sourceElement = graph.getCell(selectedElements.current[0].id); 
         const targetElement = graph.getCell(selectedElements.current[1].id); 
     
@@ -251,11 +270,11 @@ const DiagramEditor = ({onGenerate}) => {
           input.type = 'text';
           input.placeholder = 'Enter relationship type';
           
-          input.style.position = 'absolute';
+          /*input.style.position = 'absolute';
           input.style.width = '200px';
-          input.style.left = `${targetElement.position().x + 98}px`;
+          input.style.left = ${targetElement.position().x + 98}px;
           input.style.transform = 'translateX(-50%)';
-          input.style.bottom = `${window.innerHeight - toolbarRef.current.offsetTop - 55}px`;
+          input.style.bottom = ${window.innerHeight - toolbarRef.current.offsetTop - 55}px;
 
           input.style.backgroundColor = '#ffff'; 
           input.style.border = '1px solid #001F3F';   
@@ -325,7 +344,7 @@ const DiagramEditor = ({onGenerate}) => {
         setErrorMessage('Please select two elements to connect with a Broken Arrow.');
         setIsErrorVisible(true);
       }
-    };
+    };*/
 
     const addSolidLine = () => {
       if (selectedElements.current.length === 2) {
@@ -365,24 +384,6 @@ const DiagramEditor = ({onGenerate}) => {
       }
     };
 
-    const TextElement = joint.dia.Element.define('Relationship Label', {
-      size: { width: 100, height: 30 },
-      attrs: {
-        label: {
-          'font-size': 14,
-          'text-anchor': 'middle',
-          'ref-x': 0.5,
-          'ref-y': 0.5,
-          'y-alignment': 'middle',
-          fill: 'black'
-        }
-      },
-      markup: [{
-        tagName: 'text',
-        selector: 'label'
-      }]
-    });
-
     const deleteSelectedElements = () => {
       const remainingElements = selectedElements.current.filter(({ id }) => {
         const element = graph.getCell(id);
@@ -392,53 +393,14 @@ const DiagramEditor = ({onGenerate}) => {
           }
           return true;
       });
+      setIsInputVisible(false);
       selectedElements.current = remainingElements;
     };
 
     paper.on('element:pointerdblclick', (elementView) => {
-      if (isToolbarReady && toolbarRef.current) {
-          const element = elementView.model;
-  
-          // Check for the label attribute depending on the element type
-          const currentLabel = element.attr('label/text') || element.attr('.label/text') || '';
-  
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = currentLabel;
-          input.style.position = 'absolute';
-          input.style.width = '200px';
-          input.style.left = `${element.position().x + 98}px`;
-          input.style.transform = 'translateX(-50%)';
-          input.style.bottom = `${window.innerHeight - toolbarRef.current.offsetTop - 55}px`;
-  
-          input.style.backgroundColor = '#ffff';
-          input.style.border = '1px solid #001F3F';
-          input.style.padding = '5px';
-          input.style.borderRadius = '5px';
-          input.style.fontSize = '12px';
-  
-          document.body.appendChild(input);
-  
-          const removeInput = () => {
-              if (input.parentNode) {
-                  document.body.removeChild(input);
-              }
-          };
-  
-          input.addEventListener('keydown', (e) => {
-              if (e.key === 'Enter') {
-                  // Update the appropriate label attribute
-                  if (element.attr('label/text') !== undefined) {
-                      element.attr('label/text', input.value);
-                  } else if (element.attr('.label/text') !== undefined) {
-                      element.attr('.label/text', input.value);
-                  }
-                  removeInput();
-              }
-          });
-  
-          input.focus();
-      }
+      const element = elementView.model;
+      setCurrentElement(element);
+      setIsInputVisible(true);
     });
 
     paper.on('element:pointerclick', (elementView) => {
@@ -464,16 +426,16 @@ const DiagramEditor = ({onGenerate}) => {
           element.attr('.leg-right/stroke', 'red');
         }
       } else {
-        // Handle selection logic for non-actor elements
         if (isSelected) {
           selectedElements.current = selectedElements.current.filter(({ id }) => id !== element.id);
-          element.attr('body/stroke', 'none'); // Remove outline
+          element.attr('body/stroke', 'none');
+          console.log(selectedElements);
         } else {
           selectedElements.current.push({ id: element.id, element });
-          element.attr('body/stroke', '#001F3F'); // Add outline
+          element.attr('body/stroke', '#001F3F');
+          console.log(selectedElements);
         }
       }
-
       /*if (isSelected) {
         selectedElements.current = selectedElements.current.filter(({ id }) => id !== element.id);
         element.attr('body/stroke', 'none');
@@ -502,8 +464,92 @@ const DiagramEditor = ({onGenerate}) => {
         systemNameElement.attr('label/text', SystemName);
         systemNameElement.position(
           (paperRef.current.options.width - systemNameElement.size().width) / 2,
-          10 // Always at the top
+          10
         );
+      }
+    }
+  };
+
+  const handleElementKeyDown = (e) => {
+    if (e.key === 'Enter') {
+        if (currentElement) {
+            if (currentElement.attr('label/text') !== undefined) {
+                currentElement.attr('label/text', inputValue);
+            } else if (currentElement.attr('.label/text') !== undefined) {
+                currentElement.attr('.label/text', inputValue);
+            }
+        }
+        setIsInputVisible(false);
+        setInputValue('');
+    }
+  };
+
+  const TextElement = joint.dia.Element.define('Relationship Label', {
+    size: { width: 100, height: 30 },
+    attrs: {
+      label: {
+        'font-size': 14,
+        'text-anchor': 'middle',
+        'ref-x': 0.5,
+        'ref-y': 0.5,
+        'y-alignment': 'middle',
+        fill: 'black'
+      }
+    },
+    markup: [{
+      tagName: 'text',
+      selector: 'label'
+    }]
+  });
+
+  const handleRelationshipInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      const relationshipType = relationshipValue.trim();
+
+      if (relationshipType === 'include' || relationshipType === 'extend') {
+        const sourceElement = graph.getCell(selectedElements.current[0].id); 
+        const targetElement = graph.getCell(selectedElements.current[1].id);
+
+        const link = new joint.shapes.standard.Link({
+          type: 'Relationship', 
+          attrs: {
+            line: {
+              stroke: '#001F3F',
+              strokeWidth: 2,
+              strokeDasharray: '5,5',
+              targetMarker: {
+                type: 'path',
+                d: 'M 10 -5 0 0 10 5 Z',
+                fill: '#001F3F',
+              },
+            },
+          },
+          label: relationshipType
+        });
+
+        link.source({ id: sourceElement.id });
+        link.target({ id: targetElement.id });
+        link.addTo(graph);
+
+        const label = new TextElement({
+          attrs: {
+            label: {
+              text: relationshipType 
+            }
+          }
+        });
+        label.position(200, 200); 
+        label.addTo(graph);
+
+        selectedElements.current.forEach(selected => {
+          selected.element.attr('body/stroke', 'none');
+        });
+        selectedElements.current = [];
+
+        setIsRelationshipInputVisible(false);
+        setRelationshipValue('');
+      } else {
+        alert('Please enter either include or extend.');
       }
     }
   };
@@ -514,6 +560,7 @@ const DiagramEditor = ({onGenerate}) => {
 
   return (
     <div className='diagram'>
+
       <div className='toolbar' id="toolbar" ref={toolbarRef}>
         <div className='toolbar-buttons'>
           <button className="buttona add-use-case">Add Use Case</button>
@@ -522,6 +569,7 @@ const DiagramEditor = ({onGenerate}) => {
           <button className="buttona add-sline">Association Line</button>
           <button className="buttona delete">Delete</button>
         </div>
+
         <div className='toolbar-input'>
           <input
             onKeyDown={handleInputKeyDown}
@@ -533,13 +581,39 @@ const DiagramEditor = ({onGenerate}) => {
             className="system-name-input"
           />
         </div>
+
         {isErrorVisible && <ErrorModal message={errorMessage} onClose={closeModal} />}
+
       </div>
-      <div id="maonajudniboss" className='editorr' ref={diagramRef}>
-      </div>
+
+      <div id="maonajudniboss" className='editorr' ref={diagramRef}></div>
+
       <div className='generate-button'>
         <button className='gbutton' onClick={handleGenerateButtonClick}>Generate</button>
+        {isInputVisible && (
+                    <input
+                        type="text"
+                        className="Element-input-box"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={handleElementKeyDown}
+                        autoFocus
+                        placeholder="Enter element name"
+                    />
+                )}
+        {isRelationshipInputVisible && (
+                    <input
+                        type="text"
+                        className="Element-input-box"
+                        value={relationshipValue}
+                        onChange={(e) => setRelationshipValue(e.target.value)}
+                        onKeyDown={handleRelationshipInputKeyDown}
+                        autoFocus
+                        placeholder="Enter relationship"
+                    />
+                )}
       </div>
+
     </div>
   );
 };

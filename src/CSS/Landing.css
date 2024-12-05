@@ -26,12 +26,10 @@
     justify-content: space-between;
     align-items: center;
 
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
-
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px 0;
     z-index: 10;
 
     background-color: transparent;
@@ -40,7 +38,7 @@
 
 .NavBar.scrolled {
     background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
   
 .NavBar-left, .Navbar-right {
@@ -58,9 +56,6 @@
 .Navbar-right {
     margin-right: 130px;
     justify-content: flex-end;
-}
-
-.Navbar-right {
     display: flex;
     justify-content: flex-end;
     gap: 50px;
@@ -240,7 +235,7 @@ section {
 }
 
 .how-it-works-section h2 {
-    font-size: 32px;
+    font-size: 28px;
     color: black;
     font-weight: normal;
     margin-top: 100px;

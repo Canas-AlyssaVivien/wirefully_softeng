@@ -8,6 +8,12 @@ import HistoryScreen from './HistoryScreen';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+import left from '../CSS/left.png';
+import right from '../CSS/right.png';
+import bleft from '../CSS/bleft.png';
+
+import { gsap } from 'gsap';
+
 function Dashboard() {
     const [errorMessage, setErrorMessage] = useState('');
     const [xmlResponse, setXmlResponse] = useState(null);
@@ -22,6 +28,10 @@ function Dashboard() {
     const [showXML, setShowXML] = useState(false);
     const { token, logout} = useAuth();
     const navigate = useNavigate();
+
+    const logoRef = useRef(null);
+    const spanRef = useRef(null);
+    const backRef = useRef(null);
 
     const handleLogout = async () => {
         await logout();
@@ -95,10 +105,33 @@ function Dashboard() {
         }
     };
 
+    const handleBackClick = async () => {
+        setIsHistoryVisible(!isHistoryVisible);
+        gsap.to(logoRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+        gsap.to(spanRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+        gsap.to(backRef.current, { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
+    };
+
     const toggleHistory = () => {
-        setIsHistoryVisible(!isHistoryVisible);  
-        if (!isHistoryVisible) {
+        setIsHistoryVisible(!isHistoryVisible);
+
+        /*if (!isHistoryVisible) {
             fetchHistory(); 
+        }*/
+
+        if (!isHistoryVisible) {
+            gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+            gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+            gsap.fromTo(
+                backRef.current,
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
+            );
+            fetchHistory();
+        } else {
+            gsap.to(logoRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+            gsap.to(spanRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+            gsap.to(backRef.current, { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
         }
     };
 
@@ -157,49 +190,37 @@ function Dashboard() {
     const steps = [
         {
             title: "Welcome to Wirefully!",
-            content: "Follow these simple steps to transform your use case diagrams to phone wireframes!",
+            content: "Follow these guidelines to transform your use case diagrams to phone wireframes!",
         },
         {
-            num: "STEP 1",
             title: "Design Your Use Case Diagram",
             content: "Enter the system name then add and modify use case notations in the editor. Be as specific as possible!",
         },
         {
-            num: "STEP 1.0",
-            title: "Guidelines when Creating your Use Case Diagram in the Editor",
-        },
-        {
-            num: "STEP 1.1",
             title: "Naming the Use Case Diagram Notations",
             content: "To name the use case diagram notations, double click.",
         },
         {
-            num: "STEP 1.2",
             title: "Selecting the Use Case Diagram Notations",
-            content: "When the actor notation is selected, it turns to red. On the other hand, the use case notation will be outlined.",
+            content: "When the actor notation is selected, it turns red. On the other hand, the use case notation will be outlined.",
         },
         {
-            num: "STEP 1.3",
             title: "Connecting Use Case Diagram Notations",
             content: "Select two notations to connect using association and broken lines.",
         },
         {
-            num: "STEP 1.4",
             title: "Deleting Use Case Diagram Notations",
             content: "Select a use case diagram notation then click 'Delete'.",
         },
         {
-            num: "STEP 2",
             title: "Generate the Wireframe",
             content: "Click the 'Generate' button and watch your wireframe come to life.",
         },
         {
-            num: "STEP 3",
             title: "Toggle Views",
             content: "Use the 'XML' button to switch between wireframe and XML views.",
         },
         {
-            num: "STEP 4",
             title: "Export Your Work",
             content: "Save your wireframe with the use case diagram as an image by clicking the 'Export' button.",
         },
@@ -218,7 +239,7 @@ function Dashboard() {
         if (currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
         } else {
-            toggleGuide(); // Close the guide when finished
+            toggleGuide();
         }
     };
 
@@ -235,46 +256,54 @@ function Dashboard() {
 
     return (
         <div className='Whole-Page'>
-            <div className="NavBar">
+            <div className="User-NavBar">
                 <div className="NavBar-left">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <span className='Navbar-textt'>WireFully</span>
-                </div>
-                <div className='Navbar-middle'>
-                    <span className='Navbar-textt'>Hi, welcome back!</span>
+                    <button ref={backRef} className='Dashboard-Back-container'  onClick={handleBackClick}>
+                        <img src={bleft} />
+                        <button type="button" className="Dashboard-Back-button">
+                            Back
+                        </button>
+                    </button>
+                    <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
+                    <span ref={spanRef} className='Navbar-textt'>Hi, welcome back!</span>
                 </div>
                 <div className='Navbar-right'>
-                    <span onClick={toggleGuide} className='Navbar-text'>Guide</span>
-                    <span onClick={toggleHistory} className='Navbar-text'>
-                        {isHistoryVisible ? 'Back' : 'History'}
-                    </span>
-                    <span onClick={handleLogout} className='Navbar-text'>Log Out</span>
+                    <button onClick={toggleHistory} className='Navbar-text'>History</button>
+                    <button onClick={toggleGuide} className='Navbar-text'>Guide</button>
+                    <button onClick={handleLogout} className='Navbar-text'>Log Out</button>
                 </div>
             </div>
 
             {isGuideVisible && (
                 <div className={`overlay show`}>
                     <div className="overlay-content">
-                    <button onClick={closeGuide} className="close-button">✖</button>
-                        <h5>{steps[currentStep].num}</h5>
-                        <h2>{steps[currentStep].title}</h2>
-                        <p>{steps[currentStep].content}</p>
+                        <div className='close-button-container'>
+                            <button onClick={closeGuide} className="close-button">✖</button>
+                        </div>
+
+                        <div className='instructions-container'>
+                            <h2>{steps[currentStep].title}</h2>
+                            <p>{steps[currentStep].content}</p>
+                        </div>
                         
-                        <div className="button-container">
+                        <div className="guide-buttons-container">
                             {currentStep > 0 && (
                                 <button
                                     onClick={previousStep}
                                     className="previous-button"
                                 >
-                                    Previous
+                                    <img src={left} alt="Previous" />
                                 </button>
                             )}
-                            <button
-                                onClick={nextStep}
-                                className="next-button"
-                            >
-                                {currentStep < steps.length - 1 ? "Next" : "Finish"}
-                            </button>
+                            {currentStep < steps.length - 1 && (
+                                <button
+                                    onClick={nextStep}
+                                    className="next-button"
+                                    aria-label="Next"
+                                >
+                                    <img src={right} alt="Previous" />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -283,6 +312,7 @@ function Dashboard() {
             {isHistoryVisible ? (
                 <HistoryScreen history={history} />
             ) : (
+                
             <div className='Display-Main'>
                 <div className='column1'>
                     <div className='query-input'>

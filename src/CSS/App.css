@@ -6,11 +6,18 @@
     padding: 0;
 }
 
-.MainPage {
-    min-height: 100vh;
+html, body {
     background-attachment: fixed;
     background-image: url('../CSS/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.MainPage {
+    display: flex;
+    flex-direction: column;
 }

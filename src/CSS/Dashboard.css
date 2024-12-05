@@ -4,40 +4,17 @@
     flex-direction: column;
 }
 
-.NavBar {
+.User-NavBar {
     width: 100%;
-    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    position: fixed;
+    top: 0;
+    padding: 10px 0;
+    z-index: 10;
     background-color: white;
-}
-  
-.NavBar-left, .Navbar-middle, .Navbar-right {
-    display: flex;
-    align-items: center;
-}
-
-.NavBar-left {
-    margin-left: 30px;
-    justify-content: flex-start;
-}
-
-.Navbar-middle {
-    justify-content: center;
-    flex-grow: 1;
-    text-align: center;
-}
-
-.Navbar-right {
-    margin-right: 30px;
-    justify-content: flex-end;
-}
-
-.Navbar-right {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
 }
   
 .App-logo {
@@ -47,17 +24,9 @@
 }
 
 .Navbar-textt {
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 600;
     color: black;
-}
-  
-.Navbar-text {
-    font-size: 13px;
-    font-weight: 400;
-    color: black;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .Navbar-text:hover {
@@ -65,7 +34,41 @@
     font-weight: 600;
 }
 
-.Main {
+.Dashboard-Back-container {
+    opacity: 0;
+    position: absolute;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease !important;
+}
+
+.Dashboard-Back-container:hover {
+    transform: translateY(5px) !important;
+}
+
+.Dashboard-Back-container:active {
+    transform: translateY(10px) !important;
+}
+
+.Dashboard-Back-button {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/*MAIN*/
+/*.Main {
     margin-top: 50px;
     background-attachment: fixed;
     background-color: rgba(255, 255, 255, 0.3);
@@ -76,7 +79,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-}
+}*/
 
 .h2 {
     color: rgba(49, 54, 63, 0.3);
@@ -114,11 +117,11 @@
 }
 
 .Display-Main {
+    margin-top: 80px;
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 
 .column1, .column2 {
@@ -218,15 +221,16 @@ iframe {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    
 }
 
 .xml-preview-box {
     padding: 20px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
-    min-height: 200px; /* Set a minimum height for the preview box */
-    max-height: 500px; /* Optional: Limit the maximum height */
-    overflow-y: auto;  /* Add scroll if content overflows */
+    min-height: 200px;
+    max-height: 500px;
+    overflow-y: auto;
     margin-top: 20px;
 }
 
@@ -238,21 +242,24 @@ h2 {
     background-color: #001F3F;
     border: none;
     color: white;
-    padding: 8px 10px;
+    padding: 8px 3px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 10px;
-    margin: 5px;
+    font-size: 12px;
+    margin: 3px;
     cursor: pointer;
     border-radius: 5px;
-    width: 95px;
+
+    width: 112px;
 }
   
 .export-button:hover, .xml-button:hover {
-    background-color: white;
+    background-color: #E2E2B6;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    color: black;
     border: none;
-    color: #001F3F;
 }
 
 .horizontal-spinner-container {
@@ -304,13 +311,11 @@ h2 {
     }
   }
 
-  .overlay {
+.overlay {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(196, 215, 255, 0.6); /* Dim the background for better focus */
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -318,36 +323,80 @@ h2 {
     animation: fadeIn 0.3s ease;
 }
 
-
 .overlay-content {
-    background: linear-gradient(135deg, #f0f4ff, #e6ebff);
-    margin: 20px 20px;
-    padding: 70px;
+    width: 540px;
+    height: 390px;
+    background: white;
+
     display: flex;
     flex-direction: column;
-    justify-content: center; 
+    justify-content: space-between; 
     align-items: center;
-    border-radius: 50px; 
+
+    border-radius: 10px; 
     text-align: center;
-    width: 400px;   
-    height: 250px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
-    font-family: 'Arial', sans-serif;
     animation: slideIn 0.4s ease-out;
     position: relative;
 }
 
-.overlay-content h2 {
-    margin-top: 0;
-    color: #03346E; /* Elegant navy blue */
-    font-size: 2em; /* Larger for emphasis */
-    font-weight: bold;
-    /* margin-bottom: 20px; */
+.close-button-container, .instructions-container, .guide-buttons-container {
+    width: 100%;
+    display: flex;
 }
 
-.overlay-content h5 {
-    color: #03346E; /* Elegant navy blue */
-    font-size: 0.9em; /* Larger for emphasis */
+.close-button-container, .instructions-container {
+    flex-direction: column;
+}
+
+.close-button-container {
+    width: 100%;
+    align-items: flex-end;
+    position: absolute;
+    top: 10px;
+}
+
+.instructions-container {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.guide-buttons-container {
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    bottom: 20px;
+    gap: 50px;
+}
+
+.guide-buttons-container button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.previous-button:hover {
+    transform: translateX(-5px);
+}
+
+.previous-button:active {
+    transform: translateX(-10px);
+}
+
+.next-button:hover {
+    transform: translateX(5px);
+}
+
+.next-button:active {
+    transform: translateX(10px);
+}
+
+.overlay-content h2 {
+    margin-top: 0;
+    color: #03346E;
+    font-size: 2em;
     font-weight: bold;
 }
 
@@ -359,32 +408,6 @@ h2 {
     line-height: 1.6; 
 }
 
-/* font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif; */
-
-.next-button {
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    font-weight: 600;
-    color: #fff;
-    font-size: 14px;
-    height: 38px;
-    padding: 8px 24px;
-    margin: 10px 40px;
-    border-radius: 50px;
-    width: 110px;
-    background-image: linear-gradient(180deg,#6EACDA,#03346E);
-    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-    transition: all .2s ease-out;
-}
-
-.next-button:hover {
-    background-color: #fff; /* Set the hover color */
-    background-image: none; /* Remove the gradient on hover */
-    color: #000; 
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -394,45 +417,23 @@ h2 {
     }
 }
 
-.previous-button{
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    font-weight: 600;
-    color: #fff;
-    font-size: 14px;
-    height: 38px;
-    padding: 8px 24px;
-    border-radius: 50px;
-    margin: 10px 40px;
-    width: 110px;
-    background-image: linear-gradient(180deg,#6EACDA,#03346E);
-    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-    transition: all .2s ease-out;
-}
-
-.previous-button:hover {
-    background-color: #fff; 
-    background-image: none;
-    color: #000; 
-}
-
 .close-button {
-    position: absolute;
-    top: 20px;
-    right: 30px;
+    width: 25px;
     background: transparent;
     border: none;
     font-size: 1.5rem;
     color: #03346E;
     cursor: pointer;
     transition: color 0.3s ease;
+    margin-right: 30px;
 }
 
 .close-button:hover {
     color: #cc0000;
+    transform: scale(1.2);
+
 }
+
 @keyframes slideIn {
     from {
         transform: translateY(-20px);
