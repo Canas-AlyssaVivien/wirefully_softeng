@@ -210,6 +210,7 @@ iframe {
     transform: scale(0.7); 
     transform-origin: center; 
     transition: transform 0.3s ease; 
+    font-size: 1.5em;
 }
 
 .buttons {
@@ -231,40 +232,6 @@ iframe {
 
 h2 {
     margin-top: 20px;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensures it's above other elements */
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 20px;
-    max-width: 80%;
-    max-height: 800px;
-    overflow-y: auto; /* Adds scroll if content is too long */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-.close-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .export-button, .xml-button {
@@ -336,3 +303,143 @@ h2 {
       opacity: 0.8;
     }
   }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(196, 215, 255, 0.6); /* Dim the background for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+
+.overlay-content {
+    background: linear-gradient(135deg, #f0f4ff, #e6ebff);
+    margin: 20px 20px;
+    padding: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    border-radius: 50px; 
+    text-align: center;
+    width: 400px;   
+    height: 250px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+    font-family: 'Arial', sans-serif;
+    animation: slideIn 0.4s ease-out;
+    position: relative;
+}
+
+.overlay-content h2 {
+    margin-top: 0;
+    color: #03346E; /* Elegant navy blue */
+    font-size: 2em; /* Larger for emphasis */
+    font-weight: bold;
+    /* margin-bottom: 20px; */
+}
+
+.overlay-content h5 {
+    color: #03346E; /* Elegant navy blue */
+    font-size: 0.9em; /* Larger for emphasis */
+    font-weight: bold;
+}
+
+.overlay-content p {
+    font-size: 0.9em;
+    margin: 0px 20px;
+    margin-bottom: 10px;
+    color: #4a4a4a; 
+    line-height: 1.6; 
+}
+
+/* font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif; */
+
+.next-button {
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 24px;
+    margin: 10px 40px;
+    border-radius: 50px;
+    width: 110px;
+    background-image: linear-gradient(180deg,#6EACDA,#03346E);
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
+    transition: all .2s ease-out;
+}
+
+.next-button:hover {
+    background-color: #fff; /* Set the hover color */
+    background-image: none; /* Remove the gradient on hover */
+    color: #000; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.previous-button{
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    margin: 10px 40px;
+    width: 110px;
+    background-image: linear-gradient(180deg,#6EACDA,#03346E);
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
+    transition: all .2s ease-out;
+}
+
+.previous-button:hover {
+    background-color: #fff; 
+    background-image: none;
+    color: #000; 
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #03346E;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #cc0000;
+}
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

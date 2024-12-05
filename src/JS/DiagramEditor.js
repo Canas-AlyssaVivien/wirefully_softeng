@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as joint from 'jointjs';
 import '../CSS/DiagramEditor.css';
+import ErrorModal from './ErrorModal';
+import '../CSS/ErrorModal.css';
 import html2canvas from 'html2canvas';
 
 const DiagramEditor = ({onGenerate}) => {
@@ -12,6 +14,8 @@ const DiagramEditor = ({onGenerate}) => {
   const [isToolbarReady, setIsToolbarReady] = useState(false);
   const systemNameElementRef = useRef(null);
   const [SystemName, setSystemName] = useState('');
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   /*const exportDiagramToText = async () => {
     try {
@@ -41,18 +45,35 @@ const DiagramEditor = ({onGenerate}) => {
   const exportDiagramToText = async () => {
 
       if (!SystemName || SystemName.trim() === "") {
-        alert("System Name is required. Please provide a valid System Name.");
-        console.error("Error: System Name is empty or null.");
+        setErrorMessage("System Name is required. Please provide a valid System Name.");
+        setIsErrorVisible(true);
         return;
       }
 
       const diagramData = JSON.stringify(graphRef.current.toJSON());
+      console.log(diagramData);
 
-      if (!diagramData || diagramData === '{"cells":[]}') {
+    const diagramMata = graphRef.current.toJSON();
+    const diagramJson = JSON.parse(JSON.stringify(diagramMata));  // Ensure it's a deep copy
+
+    console.log(diagramJson);
+
+    /*if (!diagramData || diagramJson.cells.length === 0) {
         console.error('Error: Diagram data is empty or invalid.');
-        alert('The diagram is empty. Please create a valid diagram before generating.');
+        setErrorMessage("The diagram is empty or invalid. Please create a valid diagram before generating.");
+        setIsErrorVisible(true);
         return;
-      }
+    }
+
+    const actorsExist = diagramJson.cells.some(cell => cell.type === 'actor'); 
+    const useCasesExist = diagramJson.cells.some(cell => cell.type === 'useCase'); 
+
+    if (!actorsExist || !useCasesExist) {
+        console.error('Error: Actor or Use Case not found in the diagram data.');
+        setErrorMessage("Actor or Use Case not found in the diagram. Please ensure the diagram contains both.");
+        setIsErrorVisible(true);
+        return;
+    }*/
 
   
       onGenerate(diagramData);
@@ -301,7 +322,8 @@ const DiagramEditor = ({onGenerate}) => {
           console.error('Invalid source or target element for the link.');
         }
       } else {
-        alert('Please select two elements to connect with a Broken Arrow.');
+        setErrorMessage('Please select two elements to connect with a Broken Arrow.');
+        setIsErrorVisible(true);
       }
     };
 
@@ -338,7 +360,8 @@ const DiagramEditor = ({onGenerate}) => {
           console.error('Invalid source or target element for the link.');
         }
       } else {
-        alert('Please select two elements to connect with a solid arrow.');
+        setErrorMessage('Please select two elements to connect with a solid arrow.');
+        setIsErrorVisible(true);
       }
     };
 
@@ -485,6 +508,10 @@ const DiagramEditor = ({onGenerate}) => {
     }
   };
 
+  const closeModal = () => {
+    setIsErrorVisible(false);
+  };
+
   return (
     <div className='diagram'>
       <div className='toolbar' id="toolbar" ref={toolbarRef}>
@@ -506,6 +533,7 @@ const DiagramEditor = ({onGenerate}) => {
             className="system-name-input"
           />
         </div>
+        {isErrorVisible && <ErrorModal message={errorMessage} onClose={closeModal} />}
       </div>
       <div id="maonajudniboss" className='editorr' ref={diagramRef}>
       </div>

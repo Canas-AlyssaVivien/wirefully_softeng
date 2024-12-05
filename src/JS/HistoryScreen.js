@@ -21,12 +21,7 @@ function HistoryScreen({ history }) {
             <h2>Generation History</h2>
             {isLoading ? (
                 <div className="spinner-container">
-                    <div className="bubbles-spinner">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                    <div className="loader">
                     </div>
                 </div>
             ) : Array.isArray(history) && history.length === 0 ? (
