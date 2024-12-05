@@ -13,6 +13,8 @@ function Dashboard() {
     const [xmlResponse, setXmlResponse] = useState(null);
     const [htmlPreview, setHtmlPreview] = useState(null);
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
     const [history, setHistory] = useState([]);
     const htmlPreviewRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -152,6 +154,85 @@ function Dashboard() {
         setShowXML(!showXML);
     };
 
+    const steps = [
+        {
+            title: "Welcome to Wirefully!",
+            content: "Follow these simple steps to transform your use case diagrams to phone wireframes!",
+        },
+        {
+            num: "STEP 1",
+            title: "Design Your Use Case Diagram",
+            content: "Enter the system name then add and modify use case notations in the editor. Be as specific as possible!",
+        },
+        {
+            num: "STEP 1.0",
+            title: "Guidelines when Creating your Use Case Diagram in the Editor",
+        },
+        {
+            num: "STEP 1.1",
+            title: "Naming the Use Case Diagram Notations",
+            content: "To name the use case diagram notations, double click.",
+        },
+        {
+            num: "STEP 1.2",
+            title: "Selecting the Use Case Diagram Notations",
+            content: "When the actor notation is selected, it turns to red. On the other hand, the use case notation will be outlined.",
+        },
+        {
+            num: "STEP 1.3",
+            title: "Connecting Use Case Diagram Notations",
+            content: "Select two notations to connect using association and broken lines.",
+        },
+        {
+            num: "STEP 1.4",
+            title: "Deleting Use Case Diagram Notations",
+            content: "Select a use case diagram notation then click 'Delete'.",
+        },
+        {
+            num: "STEP 2",
+            title: "Generate the Wireframe",
+            content: "Click the 'Generate' button and watch your wireframe come to life.",
+        },
+        {
+            num: "STEP 3",
+            title: "Toggle Views",
+            content: "Use the 'XML' button to switch between wireframe and XML views.",
+        },
+        {
+            num: "STEP 4",
+            title: "Export Your Work",
+            content: "Save your wireframe with the use case diagram as an image by clicking the 'Export' button.",
+        },
+        {
+            title: "You're All Set!",
+            content: "Enjoy using the wireframe generator. If you need help, click 'Guide' anytime!",
+        },
+    ];
+
+    const toggleGuide = () => {
+        setIsGuideVisible(!isGuideVisible);
+        setCurrentStep(0);
+    };
+
+    const nextStep = () => {
+        if (currentStep < steps.length - 1) {
+            setCurrentStep(currentStep + 1);
+        } else {
+            toggleGuide(); // Close the guide when finished
+        }
+    };
+
+    const previousStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+    
+    const closeGuide = () => {
+        setIsGuideVisible(false);
+    };
+
+
     return (
         <div className='Whole-Page'>
             <div className="NavBar">
@@ -163,12 +244,42 @@ function Dashboard() {
                     <span className='Navbar-textt'>Hi, welcome back!</span>
                 </div>
                 <div className='Navbar-right'>
+                    <span onClick={toggleGuide} className='Navbar-text'>Guide</span>
                     <span onClick={toggleHistory} className='Navbar-text'>
                         {isHistoryVisible ? 'Back' : 'History'}
                     </span>
                     <span onClick={handleLogout} className='Navbar-text'>Log Out</span>
                 </div>
             </div>
+
+            {isGuideVisible && (
+                <div className={`overlay show`}>
+                    <div className="overlay-content">
+                    <button onClick={closeGuide} className="close-button">✖</button>
+                        <h5>{steps[currentStep].num}</h5>
+                        <h2>{steps[currentStep].title}</h2>
+                        <p>{steps[currentStep].content}</p>
+                        
+                        <div className="button-container">
+                            {currentStep > 0 && (
+                                <button
+                                    onClick={previousStep}
+                                    className="previous-button"
+                                >
+                                    Previous
+                                </button>
+                            )}
+                            <button
+                                onClick={nextStep}
+                                className="next-button"
+                            >
+                                {currentStep < steps.length - 1 ? "Next" : "Finish"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}  
+            
             {isHistoryVisible ? (
                 <HistoryScreen history={history} />
             ) : (
@@ -208,9 +319,11 @@ function Dashboard() {
                                 {showXML ? 'Wireframe' : 'XML'}
                             </button>
 
-                            <button onClick={exportAsImage} className="export-button">
-                                Export
-                            </button>
+                            {!showXML && (
+                                <button onClick={exportAsImage} className="export-button">
+                                    Export
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
