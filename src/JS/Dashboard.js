@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import logo from '../CSS/1bla.png';
 import '../CSS/Dashboard.css';
+import '../CSS/HistoryScreen.css';
 import DiagramEditor from './DiagramEditor';
 import parse from 'html-react-parser';
 import html2canvas from 'html2canvas';
@@ -10,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 import left from '../CSS/left.png';
 import right from '../CSS/right.png';
+import blu from '../CSS/1blu.png';
 import bleft from '../CSS/bleft.png';
 
 import { gsap } from 'gsap';
@@ -116,13 +118,13 @@ function Dashboard() {
         if(!isHistoryVisible) {
             setIsHistoryVisible(!isHistoryVisible);
 
-            gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+            /*gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
             gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
             gsap.fromTo(
                 backRef.current,
                 { y: 50, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
-            );
+            );*/
             fetchHistory();
         }
         
@@ -260,17 +262,33 @@ function Dashboard() {
         setIsGuideVisible(false);
     };
 
+    const [expandedIndex, setExpandedIndex] = useState(null);
+    const [isLoadingg, setIsLoadingg] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoadingg(false), 5000);
+        return () => clearTimeout(timer);
+    }, [history]);
+
+    const toggleDetails = (index) => {
+        setExpandedIndex(expandedIndex === index ? null : index);
+    };
+
+    function closeOverlay() {
+        toggleDetails(null);
+    }
+
 
     return (
         <div className='Whole-Page'>
             <div className="User-NavBar">
                 <div className="NavBar-left">
-                    <button ref={backRef} className='Dashboard-Back-container'  onClick={handleBackClick}>
+                    {/* <button ref={backRef} className='Dashboard-Back-container'  onClick={handleBackClick}>
                         <img src={bleft} />
                         <button type="button" className="Dashboard-Back-button">
                             Back
                         </button>
-                    </button>
+                    </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
                     <span ref={spanRef} className='Navbar-textt'>Hi, welcome back!</span>
                 </div>
@@ -316,9 +334,80 @@ function Dashboard() {
                 </div>
             )}  
             
-            {isHistoryVisible ? (
-                <HistoryScreen history={history} />
-            ) : (
+            {isHistoryVisible && (
+            <div className="history-modal-overlay">
+                <div className="history-modal-content">
+                    <div className='clo-button-container'>
+                        <button onClick={handleBackClick} className="clo-button">✖</button>
+                    </div>
+                        <h1 className='history-h1'>History</h1>
+                        {isLoadingg ? (
+                            <div className="spinner-container">
+                                <div className="loader">
+                                </div>
+                            </div>
+                        ) : Array.isArray(history) && history.length === 0 ? (
+                            <p className='nw'>No History Available</p>
+                        ) : (
+                            <ul className="history-list">
+                                {history.map((item, index) => (
+                                    <li key={index} className="history-item">
+                                        <button
+                                            onClick={() => toggleDetails(index)}
+                                            className="query-button"
+                                        >
+                                            <img src={blu} alt="icon" className="query-button-icon" />
+                                            <p>Use Case Diagram & Wireframe {index + 1}</p>
+                                        </button>
+                                        {expandedIndex === index && (
+                                            <div className="overlayy">
+                                            <div className="overlayy-content">
+                                                <button className="closer-button" onClick={closeOverlay}>
+                                                    &times;
+                                                </button>
+                                                <div className="overlayy-scroll-container">
+                                                    <div className="history-details">
+
+                                                        <div className='history-details-row1'>
+
+                                                            <div className="use-case-diagram-container diagram-container">
+                                                                <strong>USE CASE DIAGRAM</strong>
+                                                                {item.diagram ? (
+                                                                    <img src={item.diagram} alt="Use Case Diagram" />
+                                                                ) : (
+                                                                    <p>No diagram available.</p>
+                                                                )}
+                                                            </div>
+
+                                                            <div className="bord html-container">
+                                                                <strong>WIREFRAME</strong>
+                                                                <div className="html-preview">
+                                                                    {item.html ? parse(item.html) : <p>No HTML content available.</p>}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div className="bord xml-container">
+                                                            <strong>XML CODE</strong>
+                                                            <pre>{item.xml}</pre>
+                                                        </div>
+
+                                                        <div className="timestamp">
+                                                            <em>Generated on: {item.timestamp}</em>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                </div>
+            </div>
+        )}
                 
             <div className='Display-Main'>
                 <div className='column1'>
@@ -367,7 +456,6 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-        )}
         </div>
     );
 }
