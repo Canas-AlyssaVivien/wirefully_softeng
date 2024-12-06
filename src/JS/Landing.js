@@ -5,6 +5,7 @@ import logo from '../CSS/1.png';
 import wait from '../CSS/wait.gif';
 import create from '../CSS/create.gif';
 import done from '../CSS/done.gif';
+import land from '../CSS/land.png';
 
 import { gsap } from 'gsap';
 import SplitType from 'split-type';
@@ -156,6 +157,7 @@ const Landing = () => {
                             Whether you're a first-time creator or a seasoned pro, our magical tools transform your use case diagrams into wireframes and XML code—quickly and effortlessly!  
                         </p>
                         <div className="emoticon-container">
+                            <img src={land} alt="Cute Animated Emoticon" className='aboutpic' />
                         </div>
                     </div>
                 </section>

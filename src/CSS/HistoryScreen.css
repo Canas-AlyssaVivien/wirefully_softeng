@@ -4,12 +4,12 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(196, 215, 255, 0.6);
+    /* background-color: rgba(196, 215, 255, 0.6); */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
 }
 
 .overlayy-content {
@@ -74,7 +74,7 @@ h1 {
     text-align: center;
     color: black;   
     font-weight: light;
-    margin-top: 80px;
+    margin-top: 100px;
     margin-bottom: 40px;
 }
 
@@ -106,13 +106,12 @@ h1 {
     border-radius: 15px;
     font-size: 16px;
     text-align: center;
-    font-weight: lighter; 
     transition: background-color 0.3s; 
     transition:
     transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
     border-color 400ms ease-in-out,
     background-color 400ms ease-in-out;
-  word-spacing: -2px;
+    word-spacing: -2px;
 }
 
 @keyframes movingBorders {
@@ -136,13 +135,6 @@ h1 {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
     color: black;
 }
-
-/* .query-button:hover {
-    background: #ffffff; 
-    transform: translateY(-3px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-    color: black;
-} */
 
 .history-details {
     padding: 50px;
@@ -244,9 +236,9 @@ pre {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -100px;
     height: 100%; /* Ensure it takes full height of the parent */
     min-height: 200px; /* Add a minimum height for visibility */
-    margin-top: 80px;
 }
 
 .loader {

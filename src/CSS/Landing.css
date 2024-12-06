@@ -307,3 +307,10 @@ section {
 html {
     scroll-behavior: smooth;
 }
+
+.aboutpic {
+    width: 69%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; 
+}

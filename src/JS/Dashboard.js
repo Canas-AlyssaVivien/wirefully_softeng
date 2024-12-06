@@ -41,7 +41,7 @@ function Dashboard() {
     const handleGenerate = async (diagramData) => {
         setIsLoading(true);
         try {
-            const response = await fetch("https://wirefully-backend0.onrender.com/generate-content", {
+            const response = await fetch("http://localhost:8000/generate-content", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function Dashboard() {
                     timestamp: new Date().toLocaleString(),  
                 };
     
-                await fetch("https://wirefully-backend0.onrender.com/save-history", {
+                await fetch("http://localhost:8000/save-history", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ function Dashboard() {
     
     const fetchHistory = async () => {
         try {
-            const response = await fetch("https://wirefully-backend0.onrender.com/get-history", {
+            const response = await fetch("http://localhost:8000/get-history", {
                 headers: {
                     "Authorization": `Bearer ${token}`,  
                 },
@@ -326,13 +326,15 @@ function Dashboard() {
                         <div className="output-box">
                         {isLoading ? (
                                <div className="horizontal-spinner-container">
-                               <p className="horizontal-spinner-message">AI is generating the wireframes!</p>
-                                <div class="fancy-spinner">
-                                    <div class="bubble"></div>
-                                    <div class="bubble"></div>
-                                    <div class="bubble"></div>
+                               <div className="loadd">
+                                    <div id="first">
+                                        <div id="second">
+                                            <div id="third">
+                                            </div>
+                                        </div>
                                     </div>
-                                 </div>
+                                </div>
+                                </div>
                             ) : showXML ? (
                                 <pre className="xml-content">
                                     {xmlResponse ? xmlResponse : 'No XML generated yet.'}
