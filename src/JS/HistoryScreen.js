@@ -22,7 +22,7 @@ function HistoryScreen({ history }) {
 
     return (
         <div className="history-container">
-            <h1>Creation History</h1>
+            <h1 className='history-h1'>History</h1>
             {isLoading ? (
                 <div className="spinner-container">
                     <div className="loader">
@@ -47,29 +47,37 @@ function HistoryScreen({ history }) {
                                         &times;
                                     </button>
                                     <div className="overlayy-scroll-container">
-                                    <div className="history-details">
-                                        <div className="use-case-diagram-container diagram-container">
-                                            <strong>USE CASE DIAGRAM</strong>
-                                            {item.diagram ? (
-                                                <img src={item.diagram} alt="Use Case Diagram" />
-                                            ) : (
-                                                <p>No diagram available.</p>
-                                            )}
-                                        </div>
-                                        <div className="bord html-container">
-                                            <strong>WIREFRAME</strong>
-                                            <div className="html-preview">
-                                                {item.html ? parse(item.html) : <p>No HTML content available.</p>}
+                                        <div className="history-details">
+
+                                            <div className='history-details-row1'>
+
+                                                <div className="use-case-diagram-container diagram-container">
+                                                    <strong>USE CASE DIAGRAM</strong>
+                                                    {item.diagram ? (
+                                                        <img src={item.diagram} alt="Use Case Diagram" />
+                                                    ) : (
+                                                        <p>No diagram available.</p>
+                                                    )}
+                                                </div>
+
+                                                <div className="bord html-container">
+                                                    <strong>WIREFRAME</strong>
+                                                    <div className="html-preview">
+                                                        {item.html ? parse(item.html) : <p>No HTML content available.</p>}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="bord xml-container">
+                                                <strong>XML CODE</strong>
+                                                <pre>{item.xml}</pre>
+                                            </div>
+
+                                            <div className="timestamp">
+                                                <em>Generated on: {item.timestamp}</em>
                                             </div>
                                         </div>
-                                        <div className="bord xml-container">
-                                            <strong>XML CODE</strong>
-                                            <pre>{item.xml}</pre>
-                                        </div>
-                                        <div className="timestamp">
-                                            <em>Generated on: {item.timestamp}</em>
-                                        </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>

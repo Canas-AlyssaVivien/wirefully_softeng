@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Landing.css';
-import logo from '../CSS/1.png';
+import logo from '../CSS/1bla.png';
 import wait from '../CSS/wait.gif';
 import create from '../CSS/create.gif';
 import done from '../CSS/done.gif';

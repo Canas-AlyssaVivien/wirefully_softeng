@@ -29,7 +29,8 @@
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 10px 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
     z-index: 10;
 
     background-color: transparent;
@@ -51,6 +52,7 @@
 .NavBar-left {
     margin-left: 130px;
     justify-content: flex-start;
+    gap: 15px;
 }
 
 .Navbar-right {
@@ -58,13 +60,12 @@
     justify-content: flex-end;
     display: flex;
     justify-content: flex-end;
-    gap: 50px;
+    gap: 30px;
 }
   
 .App-logo {
-    height: 60px; 
+    height: 35px; 
     width: auto;
-    margin-right: 10px; 
 }
 
 .Navbar-right button {

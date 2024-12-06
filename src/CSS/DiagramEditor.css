@@ -54,7 +54,7 @@
 #maonajudniboss.editorr {
     width: 600px !important;
     height: 500px !important;
-    border: 2px solid #001F3F;
+    border: 2px solid #03346E;
     margin-top: 8px;
     margin-bottom: 10px;
     position: relative;
@@ -74,11 +74,16 @@
 .system-name-input {
     padding: 10px;
     font-size: 14px;
-    border: 2px solid #001F3F;
+    /*border: 2px solid #001F3F;*/
     border-radius: 4px;
     display: block;
     opacity: 1;
     width: 580px;
+
+    background-color: #F5F5F7;
+    border: none;
+    outline: none;
+    border: 2px solid #F5F5F7;
 }
 
 .diagram {

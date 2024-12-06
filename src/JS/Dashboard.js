@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import logo from '../CSS/1.png';
+import logo from '../CSS/1bla.png';
 import '../CSS/Dashboard.css';
 import DiagramEditor from './DiagramEditor';
 import parse from 'html-react-parser';
@@ -113,13 +113,20 @@ function Dashboard() {
     };
 
     const toggleHistory = () => {
-        setIsHistoryVisible(!isHistoryVisible);
+        if(!isHistoryVisible) {
+            setIsHistoryVisible(!isHistoryVisible);
 
+            gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+            gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+            gsap.fromTo(
+                backRef.current,
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
+            );
+            fetchHistory();
+        }
+        
         /*if (!isHistoryVisible) {
-            fetchHistory(); 
-        }*/
-
-        if (!isHistoryVisible) {
             gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
             gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
             gsap.fromTo(
@@ -132,7 +139,7 @@ function Dashboard() {
             gsap.to(logoRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
             gsap.to(spanRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
             gsap.to(backRef.current, { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
-        }
+        }*/
     };
 
     const exportAsImage = async () => {
