@@ -24,31 +24,6 @@ const DiagramEditor = ({onGenerate}) => {
   const [targetElement, setTargetElement] = useState(null);
   const graph = new joint.dia.Graph();
 
-  /*const exportDiagramToText = async () => {
-    try {
-
-      const UseCaseDiagramData = JSON.stringify(graphRef.current.toJSON());
-
-      if (!UseCaseDiagramData || UseCaseDiagramData === '{"cells":[]}') {
-        console.error('Error: Diagram data is empty or invalid.');
-        alert('The diagram is empty. Please create a valid diagram before generating.');
-        return;
-      }
-  
-      const diagramData = {
-        SystemName,
-        UseCaseDiagramData,
-      };
-
-      console.log(diagramData);
-  
-      onGenerate(diagramData);
-    } catch (error) {
-      console.error('An error occurred during export:', error);
-      alert('An unexpected error occurred. Please try again.');
-    }
-  };*/
-
   const exportDiagramToText = async () => {
 
       if (!SystemName || SystemName.trim() === "") {
@@ -59,31 +34,19 @@ const DiagramEditor = ({onGenerate}) => {
 
       const diagramData = JSON.stringify(graphRef.current.toJSON());
       console.log(diagramData);
-
-    const diagramMata = graphRef.current.toJSON();
-    const diagramJson = JSON.parse(JSON.stringify(diagramMata));  // Ensure it's a deep copy
-
-    console.log(diagramJson);
-
-    /*if (!diagramData || diagramJson.cells.length === 0) {
-        console.error('Error: Diagram data is empty or invalid.');
-        setErrorMessage("The diagram is empty or invalid. Please create a valid diagram before generating.");
+      
+      const parsedData = JSON.parse(diagramData);
+      const hasValidType = parsedData.cells.some(cell => 
+        cell.type === 'actor' && cell.type === 'usecase' && cell.type === 'Relationship'
+      );
+    
+      if (!hasValidType) {
+        setErrorMessage("Diagram must contain at least one actor, usecase, and relationship.");
         setIsErrorVisible(true);
         return;
-    }
+      }
 
-    const actorsExist = diagramJson.cells.some(cell => cell.type === 'actor'); 
-    const useCasesExist = diagramJson.cells.some(cell => cell.type === 'useCase'); 
-
-    if (!actorsExist || !useCasesExist) {
-        console.error('Error: Actor or Use Case not found in the diagram data.');
-        setErrorMessage("Actor or Use Case not found in the diagram. Please ensure the diagram contains both.");
-        setIsErrorVisible(true);
-        return;
-    }*/
-
-  
-      onGenerate(diagramData);
+      onGenerate(diagramData, SystemName);
   };
 
   const handleGenerateButtonClick = () => {

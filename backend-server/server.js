@@ -56,7 +56,7 @@ app.use(bodyParser.json());
 
 app.post('/generate-content', async (req, res) => {
   try {
-    const { diagram } = req.body;
+    const { diagramData, SystemName } = req.body;
 
     const templateContent = `
         <html>
@@ -132,7 +132,7 @@ app.post('/generate-content', async (req, res) => {
         {
           parts: [
             {
-              text: 'Based on the following use case diagram data:' + diagram + '\n\nGenerate XML codes/layout (for Android Studio) for each use case based on its relationship with actors (no further explanations, just the xml code). Make sure it looks a phone screen wireframe and add other components to make it look complete. Please be consistent and accurate about this query.',
+              text: 'Based on the following use case diagram data and system name:' + diagramData + " & " + SystemName + '\n\nGenerate XML codes/layout (for Android Studio) for each use case based on its relationship with actors (no further explanations, just the xml code). Make sure it looks a phone screen wireframe and add other components to make it look complete. Please be consistent and accurate about this query.',
             }
           ]
         }

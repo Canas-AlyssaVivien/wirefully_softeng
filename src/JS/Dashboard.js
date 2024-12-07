@@ -26,7 +26,6 @@ function Dashboard() {
     const [history, setHistory] = useState([]);
     const htmlPreviewRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-
     const [showXML, setShowXML] = useState(false);
     const { token, logout} = useAuth();
     const navigate = useNavigate();
@@ -40,7 +39,7 @@ function Dashboard() {
         navigate('/');
     };
 
-    const handleGenerate = async (diagramData) => {
+    const handleGenerate = async (diagramData, SystemName) => {
         setIsLoading(true);
         try {
             const response = await fetch("http://localhost:8000/generate-content", {
@@ -48,7 +47,7 @@ function Dashboard() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ diagram: diagramData }),
+                body: JSON.stringify({ diagramData, SystemName }),
             });
 
             console.log(diagramData);
@@ -357,7 +356,7 @@ function Dashboard() {
                                             className="query-button"
                                         >
                                             <img src={blu} alt="icon" className="query-button-icon" />
-                                            <p>Use Case Diagram & Wireframe {index + 1}</p>
+                                            <p> Use Case Diagram & Wireframe Log {index + 1}</p>
                                         </button>
                                         {expandedIndex === index && (
                                             <div className="overlayy">
