@@ -154,31 +154,36 @@ function Dashboard() {
             : null;
     
         if (htmlPreviewCanvas && diagramCanvas) {
-            
+            const margin = 50; // Padding around the combined canvas
             const maxHeight = Math.max(htmlPreviewCanvas.height, diagramCanvas.height);
-            const combinedWidth = htmlPreviewCanvas.width + diagramCanvas.width + 20; // Add padding between the images
+            const combinedWidth = htmlPreviewCanvas.width + diagramCanvas.width + 50; // Add padding between the images
     
-            
-            const canvasSize = Math.max(maxHeight, combinedWidth); // Make it a big square
+            // Calculate new canvas dimensions with extra padding
+            const canvasWidth = combinedWidth + margin * 2;
+            const canvasHeight = maxHeight + margin * 2;
+    
             const combinedCanvas = document.createElement('canvas');
             const context = combinedCanvas.getContext('2d');
     
-            // Set the canvas size to the square size
-            combinedCanvas.width = canvasSize;
-            combinedCanvas.height = canvasSize;
+            // Set the canvas size with added padding
+            combinedCanvas.width = canvasWidth;
+            combinedCanvas.height = canvasHeight;
     
-            // Fill the background with a white color (optional)
-            context.fillStyle = "#ffffff"; // White background
+            // Fill the background with a color
+            context.fillStyle = "#03045e"; // Background color
             context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
     
-            // Draw the HTML preview (wireframe) on the left side
-            const wireframeX = (canvasSize - combinedWidth) / 2; // Center horizontally
-            const wireframeY = (canvasSize - htmlPreviewCanvas.height) / 2; // Center vertically
+            // Add a border (optional)
+            context.strokeStyle = "#ffffff"; // Border color
+            context.lineWidth = 5; // Border width
+            context.strokeRect(0, 0, combinedCanvas.width, combinedCanvas.height);
+    
+            const wireframeX = margin; // Start drawing after padding
+            const wireframeY = (canvasHeight - htmlPreviewCanvas.height) / 2; // Center vertically
             context.drawImage(htmlPreviewCanvas, wireframeX, wireframeY, htmlPreviewCanvas.width, htmlPreviewCanvas.height);
     
-            // Draw the diagram on the right side, with padding in between
-            const diagramX = wireframeX + htmlPreviewCanvas.width + 50; // Add 20px padding between the images
-            const diagramY = (canvasSize - diagramCanvas.height) / 2; // Center vertically
+            const diagramX = wireframeX + htmlPreviewCanvas.width + 50; // Add padding between images
+            const diagramY = (canvasHeight - diagramCanvas.height) / 2; // Center vertically
             context.drawImage(diagramCanvas, diagramX, diagramY, diagramCanvas.width, diagramCanvas.height);
     
             const combinedImage = combinedCanvas.toDataURL('image/png');
@@ -190,7 +195,7 @@ function Dashboard() {
             console.error('Error capturing one or both images');
         }
     };
-
+    
     const toggleView = () => {
         setShowXML(!showXML);
     };

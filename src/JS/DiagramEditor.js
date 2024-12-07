@@ -36,11 +36,12 @@ const DiagramEditor = ({onGenerate}) => {
       console.log(diagramData);
       
       const parsedData = JSON.parse(diagramData);
-      const hasValidType = parsedData.cells.some(cell => 
-        cell.type === 'actor' && cell.type === 'usecase' && cell.type === 'Relationship'
-      );
-    
-      if (!hasValidType) {
+
+      const hasActor = parsedData.cells.some(cell => cell.type === "actor");
+      const hasUseCase = parsedData.cells.some(cell => cell.type === "usecase");
+      const hasRelationship = parsedData.cells.some(cell => cell.type === "Relationship");
+
+      if (!hasActor || !hasUseCase || !hasRelationship) {
         setErrorMessage("Diagram must contain at least one actor, usecase, and relationship.");
         setIsErrorVisible(true);
         return;
