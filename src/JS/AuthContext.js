@@ -10,46 +10,32 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        setTimeout(() => setLoading(false), 2000);
-
         const checkAuth = async () => {
             const token = localStorage.getItem('token');
             if (token) {
                 try {
                     const response = await axios.get('http://localhost:8000/verify-token', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
+                        headers: { Authorization: `Bearer ${token}` }
                     });
-                    /*const response = await axios.get('https://wirefully-backend0.onrender.com/verify-token', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });*/
                     setUser(response.data.user);
                     setIsAuthenticated(true);
                 } catch (error) {
-                    console.error('Token validation failed or session expired:', error);
-                    setIsAuthenticated(false);
-                    localStorage.removeItem('token'); 
+                    console.error('Authentication failed:', error);
+                    localStorage.removeItem('token');
                 }
             }
             setLoading(false);
         };
 
         checkAuth();
-    }, []);  
+    }, []);
 
     const login = async (credentials) => {
         const response = await axios.post('http://localhost:8000/login', credentials);
-        //const response = await axios.post('https://wirefully-backend0.onrender.com/login', credentials);
-        if (response.data.token) {
-            localStorage.setItem('token', response.data.token);
-            setUser(response.data.user);
-            setIsAuthenticated(true);
-        } else {
-            throw new Error('Authentication failed: No token received');
-        }
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        setUser(user);
+        setIsAuthenticated(true);
     };
 
     const logout = async () => {

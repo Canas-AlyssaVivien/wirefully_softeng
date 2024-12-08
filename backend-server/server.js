@@ -227,7 +227,7 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email});
       if (!user) {
           return res.status(400).json({ message: 'Invalid email or password. Please try again.' });
       }
@@ -238,7 +238,11 @@ app.post('/login', async (req, res) => {
       }
 
       const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
-      res.json({ token, message: 'Login successful' });
+      res.json({ token, user: { 
+                  id: user._id, 
+                  email: user.email, 
+                  username: user.username 
+              }, message: 'Login successful' });
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });
@@ -251,7 +255,7 @@ app.get('/verify-token', auth, async (req, res) => {
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
       }
-      res.json({ user: { id: user._id, email: user.email } });  // Return user data
+      res.json({ user: { id: user._id, email: user.email, username: user.username } });  // Return user data
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });

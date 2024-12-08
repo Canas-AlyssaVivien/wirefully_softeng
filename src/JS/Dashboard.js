@@ -5,7 +5,6 @@ import '../CSS/HistoryScreen.css';
 import DiagramEditor from './DiagramEditor';
 import parse from 'html-react-parser';
 import html2canvas from 'html2canvas';
-import HistoryScreen from './HistoryScreen';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,7 +26,7 @@ function Dashboard() {
     const htmlPreviewRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showXML, setShowXML] = useState(false);
-    const { token, logout} = useAuth();
+    const { user, token, logout} = useAuth();
     const navigate = useNavigate();
 
     const logoRef = useRef(null);
@@ -38,6 +37,7 @@ function Dashboard() {
         await logout();
         navigate('/');
     };
+
 
     const handleGenerate = async (diagramData, SystemName) => {
         setIsLoading(true);
@@ -294,7 +294,7 @@ function Dashboard() {
                         </button>
                     </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
-                    <span ref={spanRef} className='Navbar-textt'>Hi, welcome back!</span>
+                    <span ref={spanRef} className='Navbar-textt'>Hi <span>{user.username}</span>, welcome back!</span>
                 </div>
                 <div className='Navbar-right'>
                     <button onClick={toggleHistory} className='Navbar-text'>History</button>
