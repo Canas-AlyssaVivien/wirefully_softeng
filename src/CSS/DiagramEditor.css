@@ -7,15 +7,36 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin: 3px;
     cursor: pointer;
     border-radius: 5px;
 
-    width: 112px;
+    width: 125px;
+}
+
+.buttonb {
+    background-color: red;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+
+    padding: 5px 10px;
+}
+
+.buttonb:hover {
+    background-color: red;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    border: none;
 }
 
 .toolbar {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +47,7 @@
     width: 100%;
     display: flex;
     justify-content: center; 
-    gap: 5px;
+    gap: 10px;
     margin-bottom: 10px;
 }
 
@@ -52,12 +73,11 @@
 }
 
 #maonajudniboss.editorr {
-    width: 600px !important;
-    height: 500px !important;
+    width: 90% !important;
+    height: 560px !important;
     border: 2px solid #03346E;
-    margin-top: 8px;
-    margin-bottom: 10px;
     position: relative;
+    margin-bottom: 10px;
 
     background-color: white;
     background-image: 
@@ -65,16 +85,15 @@
         linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
     background-size: 20px 20px;
     
-    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 
+    /*box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 
                 inset 0 -4px 6px rgba(0, 0, 0, 0.2), 
                 inset 4px 0 6px rgba(0, 0, 0, 0.02), 
-                inset -4px 0 6px rgba(0, 0, 0, 0.02);
+                inset -4px 0 6px rgba(0, 0, 0, 0.02);*/
 }
   
 .system-name-input {
     padding: 10px;
     font-size: 14px;
-    /*border: 2px solid #001F3F;*/
     border-radius: 4px;
     display: block;
     opacity: 1;
@@ -100,7 +119,7 @@
 }
 
 .generate-button {
-    width: 605px;
+    width: 90%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -115,4 +134,9 @@
     border: 2px solid #001F3F;
     border-radius: 4px;
     display: block;
+
+    background-color: #F5F5F7;
+    border: none;
+    outline: none;
+    border: 1px solid #F5F5F7;
 }

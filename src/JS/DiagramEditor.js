@@ -18,10 +18,6 @@ const DiagramEditor = ({onGenerate}) => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [currentElement, setCurrentElement] = useState(null);
-  const [isRelationshipInputVisible, setIsRelationshipInputVisible] = useState(false);
-  const [relationshipValue, setRelationshipValue] = useState('');
-  const [sourceElement, setSourceElement] = useState(null);
-  const [targetElement, setTargetElement] = useState(null);
   const graph = new joint.dia.Graph();
 
   const exportDiagramToText = async () => {
@@ -209,106 +205,7 @@ const DiagramEditor = ({onGenerate}) => {
           type: 'actor'
       });
       stickman.addTo(graph);
-    };    
-
-    const addBrokenArrow = () => {
-      if (selectedElements.current.length === 2) {
-        //if (sourceElement && targetElement) {
-          setIsRelationshipInputVisible(true);
-        /*} else {
-          console.error('Invalid source or target element for the link.');
-        }*/
-      } else {
-        setErrorMessage('Please select two elements to connect with a Broken Arrow.');
-        setIsErrorVisible(true);
-      }
     };
-
-    /*const addBrokenArrow = () => {
-      if (selectedElements.current.length === 2) {
-        const sourceElement = graph.getCell(selectedElements.current[0].id); 
-        const targetElement = graph.getCell(selectedElements.current[1].id); 
-    
-        if (sourceElement && targetElement) {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.placeholder = 'Enter relationship type';
-          
-          /*input.style.position = 'absolute';
-          input.style.width = '200px';
-          input.style.left = ${targetElement.position().x + 98}px;
-          input.style.transform = 'translateX(-50%)';
-          input.style.bottom = ${window.innerHeight - toolbarRef.current.offsetTop - 55}px;
-
-          input.style.backgroundColor = '#ffff'; 
-          input.style.border = '1px solid #001F3F';   
-          input.style.padding = '5px';           
-          input.style.borderRadius = '5px';
-          input.style.fontSize = '12px';
-
-          document.body.appendChild(input);
-    
-          const removeInput = () => {
-            if (input.parentNode) {
-              document.body.removeChild(input);
-            }
-          };
-    
-          input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-              const relationshipType = input.value.trim();
-              if (relationshipType === '<<include>>' || relationshipType === '<<extend>>') {
-                const link = new joint.shapes.standard.Link({
-                  type: 'Relationship', 
-                  attrs: {
-                    line: {
-                      stroke: '#001F3F',
-                      strokeWidth: 2,
-                      strokeDasharray: '5,5',
-                      targetMarker: {
-                        type: 'path',
-                        d: 'M 10 -5 0 0 10 5 Z',
-                        fill: '#001F3F',
-                      },
-                    },
-                  },
-                  label: relationshipType
-                });
-
-                link.source({ id: sourceElement.id });
-                link.target({ id: targetElement.id });
-                link.addTo(graph);
-    
-                const label = new TextElement({
-                  attrs: {
-                    label: {
-                      text: relationshipType 
-                    }
-                  }
-                });
-                label.position(200, 200); 
-                label.addTo(graph);
-        
-                selectedElements.current.forEach(selected => {
-                  selected.element.attr('body/stroke', 'none');
-                });
-                selectedElements.current = []; 
-              } else {
-                alert('Please enter either <<include>> or <<extend>>.');
-              }
-              removeInput();
-            }
-          });
-    
-          input.focus();
-        } else {
-          console.error('Invalid source or target element for the link.');
-        }
-      } else {
-        setErrorMessage('Please select two elements to connect with a Broken Arrow.');
-        setIsErrorVisible(true);
-      }
-    };*/
 
     const addSolidLine = () => {
       if (selectedElements.current.length === 2) {
@@ -344,6 +241,134 @@ const DiagramEditor = ({onGenerate}) => {
         }
       } else {
         setErrorMessage('Please select two elements to connect with a solid arrow.');
+        setIsErrorVisible(true);
+      }
+    };
+
+    const addIncludeRelationship = () => {
+      if (selectedElements.current.length === 2) {
+        const sourceElement = graph.getCell(selectedElements.current[0].id);
+        const targetElement = graph.getCell(selectedElements.current[1].id);
+    
+        if (sourceElement && targetElement) {
+          const brokenArrow = new joint.shapes.standard.Link({
+            type: 'Relationship',
+            attrs: {
+              line: {
+                strokeDasharray: '5,5',
+                stroke: '#001F3F',
+                strokeWidth: 2,
+                targetMarker: {
+                  type: 'path',
+                  d: 'M 10 -5 0 0 10 5 z',
+                  fill: '#001F3F',
+                },
+              },
+            },
+            labels: [
+              {
+                position: {
+                distance: 0.5,
+              },
+                attrs: {
+                    text: {
+                    text: '<<include>>',
+                    fill: '#001F3F',
+                    fontSize: 12,
+                    fontFamily: 'Arial, sans-serif',
+                }
+                },
+              },
+            ],
+          });
+    
+          brokenArrow.source({ id: sourceElement.id });
+          brokenArrow.target({ id: targetElement.id });
+          brokenArrow.addTo(graph);
+    
+          selectedElements.current.forEach(({ element }) => {
+            if (element.attr('.head')) {
+              element.attr('.head/fill', 'black');
+              element.attr('.body/stroke', 'black');
+              element.attr('.arm-left/stroke', 'black');
+              element.attr('.arm-right/stroke', 'black');
+              element.attr('.leg-left/stroke', 'black');
+              element.attr('.leg-right/stroke', 'black');
+            } else {
+              element.attr('body/stroke', 'none');
+            }
+          });
+    
+          selectedElements.current = [];
+        } else {
+          console.error('Invalid source or target element for the link.');
+        }
+      } else {
+        setErrorMessage('Please select exactly two elements to create an "Include" relationship.');
+        setIsErrorVisible(true);
+      }
+    };
+    
+    const addExcludeRelationship = () => {
+      if (selectedElements.current.length === 2) {
+        const sourceElement = graph.getCell(selectedElements.current[0].id);
+        const targetElement = graph.getCell(selectedElements.current[1].id);
+    
+        if (sourceElement && targetElement) {
+          const brokenArrow = new joint.shapes.standard.Link({
+            type: 'Relationship',
+            attrs: {
+              line: {
+                strokeDasharray: '5,5',
+                stroke: '#001F3F',
+                strokeWidth: 2,
+                targetMarker: {
+                  type: 'path',
+                  d: 'M 10 -5 0 0 10 5 z',
+                  fill: '#001F3F',
+                },
+              },
+            },
+            labels: [
+              {
+                position: {
+                distance: 0.5,
+              },
+                attrs: {
+                    text: {
+                    text: '<<exclude>>',
+                    fill: '#001F3F',
+                    fontSize: 12,
+                    fontFamily: 'Arial, sans-serif',
+                }
+                },
+              },
+            ],
+          });
+    
+          brokenArrow.source({ id: sourceElement.id });
+          brokenArrow.target({ id: targetElement.id });
+          brokenArrow.addTo(graph);
+    
+          selectedElements.current.forEach(({ element }) => {
+            if (element.attr('.head')) {
+              element.attr('.head/fill', 'black');
+              element.attr('.body/stroke', 'black');
+              element.attr('.arm-left/stroke', 'black');
+              element.attr('.arm-right/stroke', 'black');
+              element.attr('.leg-left/stroke', 'black');
+              element.attr('.leg-right/stroke', 'black');
+            } else {
+              element.attr('body/stroke', 'none');
+            }
+          });
+    
+          selectedElements.current = [];
+        } else {
+          console.error('Invalid source or target element for the link.');
+        }
+      } else {
+        setErrorMessage('Please select exactly two elements to create an "Include" relationship.');
         setIsErrorVisible(true);
       }
     };
@@ -393,11 +418,11 @@ const DiagramEditor = ({onGenerate}) => {
         if (isSelected) {
           selectedElements.current = selectedElements.current.filter(({ id }) => id !== element.id);
           element.attr('body/stroke', 'none');
-          console.log(selectedElements);
+          console.log("Selected: " + selectedElements);
         } else {
           selectedElements.current.push({ id: element.id, element });
           element.attr('body/stroke', '#001F3F');
-          console.log(selectedElements);
+          console.log("Selected: " + selectedElements);
         }
       }
       /*if (isSelected) {
@@ -412,8 +437,9 @@ const DiagramEditor = ({onGenerate}) => {
     const toolbar = document.getElementById('toolbar');
     toolbar.querySelector('.add-use-case').addEventListener('click', addUseCase);
     toolbar.querySelector('.add-actor').addEventListener('click', addActor);
-    toolbar.querySelector('.add-barrow').addEventListener('click', addBrokenArrow);
     toolbar.querySelector('.add-sline').addEventListener('click', addSolidLine);
+    toolbar.querySelector('.add-aline').addEventListener('click', addIncludeRelationship);
+    toolbar.querySelector('.add-bline').addEventListener('click', addExcludeRelationship);
     toolbar.querySelector('.delete').addEventListener('click', deleteSelectedElements); 
 
 
@@ -448,76 +474,6 @@ const DiagramEditor = ({onGenerate}) => {
     }
   };
 
-  const TextElement = joint.dia.Element.define('Relationship Label', {
-    size: { width: 100, height: 30 },
-    attrs: {
-      label: {
-        'font-size': 14,
-        'text-anchor': 'middle',
-        'ref-x': 0.5,
-        'ref-y': 0.5,
-        'y-alignment': 'middle',
-        fill: 'black'
-      }
-    },
-    markup: [{
-      tagName: 'text',
-      selector: 'label'
-    }]
-  });
-
-  const handleRelationshipInputKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      const relationshipType = relationshipValue.trim();
-
-      if (relationshipType === 'include' || relationshipType === 'extend') {
-        const sourceElement = graph.getCell(selectedElements.current[0].id); 
-        const targetElement = graph.getCell(selectedElements.current[1].id);
-
-        const link = new joint.shapes.standard.Link({
-          type: 'Relationship', 
-          attrs: {
-            line: {
-              stroke: '#001F3F',
-              strokeWidth: 2,
-              strokeDasharray: '5,5',
-              targetMarker: {
-                type: 'path',
-                d: 'M 10 -5 0 0 10 5 Z',
-                fill: '#001F3F',
-              },
-            },
-          },
-          label: relationshipType
-        });
-
-        link.source({ id: sourceElement.id });
-        link.target({ id: targetElement.id });
-        link.addTo(graph);
-
-        const label = new TextElement({
-          attrs: {
-            label: {
-              text: relationshipType 
-            }
-          }
-        });
-        label.position(200, 200); 
-        label.addTo(graph);
-
-        selectedElements.current.forEach(selected => {
-          selected.element.attr('body/stroke', 'none');
-        });
-        selectedElements.current = [];
-
-        setIsRelationshipInputVisible(false);
-        setRelationshipValue('');
-      } else {
-        alert('Please enter either include or extend.');
-      }
-    }
-  };
-
   const closeModal = () => {
     setIsErrorVisible(false);
   };
@@ -527,23 +483,12 @@ const DiagramEditor = ({onGenerate}) => {
 
       <div className='toolbar' id="toolbar" ref={toolbarRef}>
         <div className='toolbar-buttons'>
-          <button className="buttona add-use-case">Add Use Case</button>
-          <button className="buttona add-actor">Add Actor</button>
-          <button className="buttona add-barrow">Broken Arrow</button>
+          <button className="buttona add-use-case">Use Case</button>
+          <button className="buttona add-actor">Actor</button>
           <button className="buttona add-sline">Association Line</button>
-          <button className="buttona delete">Delete</button>
-        </div>
-
-        <div className='toolbar-input'>
-          <input
-            onKeyDown={handleInputKeyDown}
-            id="systemName"
-            type="text"
-            value={SystemName}
-            onChange={(e) => setSystemName(e.target.value)}
-            placeholder="Enter system name"
-            className="system-name-input"
-          />
+          <button className="buttona add-aline">Include</button>
+          <button className="buttona add-bline">Exclude</button>
+          <button className="buttonb delete">X</button>
         </div>
 
         {isErrorVisible && <ErrorModal message={errorMessage} onClose={closeModal} />}
@@ -554,28 +499,29 @@ const DiagramEditor = ({onGenerate}) => {
 
       <div className='generate-button'>
         <button className='gbutton' onClick={handleGenerateButtonClick}>Generate</button>
-        {isInputVisible && (
-                    <input
-                        type="text"
-                        className="Element-input-box"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={handleElementKeyDown}
-                        autoFocus
-                        placeholder="Enter element name"
-                    />
-                )}
-        {isRelationshipInputVisible && (
-                    <input
-                        type="text"
-                        className="Element-input-box"
-                        value={relationshipValue}
-                        onChange={(e) => setRelationshipValue(e.target.value)}
-                        onKeyDown={handleRelationshipInputKeyDown}
-                        autoFocus
-                        placeholder="Enter relationship"
-                    />
-                )}
+
+          {!isInputVisible ? (
+            <input
+              onKeyDown={handleInputKeyDown}
+              id="systemName"
+              type="text"
+              value={SystemName}
+              onChange={(e) => setSystemName(e.target.value)}
+              placeholder="Enter system name"
+              className="Element-input-box"
+            />
+          ) : (
+            <input
+              type="text"
+              className="Element-input-box"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleElementKeyDown}
+              autoFocus
+              placeholder="Enter element name"
+            />
+          )}
+
       </div>
 
     </div>

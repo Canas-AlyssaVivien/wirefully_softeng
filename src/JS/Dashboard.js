@@ -38,7 +38,6 @@ function Dashboard() {
         navigate('/');
     };
 
-
     const handleGenerate = async (diagramData, SystemName) => {
         setIsLoading(true);
         try {
@@ -116,31 +115,8 @@ function Dashboard() {
     const toggleHistory = () => {
         if(!isHistoryVisible) {
             setIsHistoryVisible(!isHistoryVisible);
-
-            /*gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
-            gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
-            gsap.fromTo(
-                backRef.current,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
-            );*/
             fetchHistory();
         }
-        
-        /*if (!isHistoryVisible) {
-            gsap.to(logoRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
-            gsap.to(spanRef.current, { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
-            gsap.fromTo(
-                backRef.current,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
-            );
-            fetchHistory();
-        } else {
-            gsap.to(logoRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
-            gsap.to(spanRef.current, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
-            gsap.to(backRef.current, { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
-        }*/
     };
 
     const exportAsImage = async () => {
@@ -294,7 +270,7 @@ function Dashboard() {
                         </button>
                     </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
-                    <span ref={spanRef} className='Navbar-textt'>Hi <span>{user.username}</span>, welcome back!</span>
+                    <span ref={spanRef} className='Navbar-textt'>Hi, <span>{user.username}</span></span>
                 </div>
                 <div className='Navbar-right'>
                     <button onClick={toggleHistory} className='Navbar-text'>History</button>

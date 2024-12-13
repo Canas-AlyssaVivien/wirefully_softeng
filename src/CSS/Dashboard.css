@@ -27,9 +27,9 @@
 }
 
 .Navbar-textt span {
-    background: linear-gradient(to right, #03045e, #023e8a, #0077b6, #0096c7); /* Define the gradient colors */
-    -webkit-background-clip: text; /* Clip the background to the text */
-    -webkit-text-fill-color: transparent; /* Make the text transparent to reveal the gradient */
+    background: linear-gradient(to right, #021526, #03346E, #03346E, #6EACDA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .Navbar-text:hover {
@@ -177,13 +177,13 @@ iframe {
 }
 
 .inside-column2 h3 {
-    width: 625px;
+    width: 90%;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .output-box {
-    width: 600px;
+    width: 90%;
     height: 550px;
     border: 2px solid #001F3F;
     padding: 10px;
@@ -240,11 +240,10 @@ iframe {
 
 
 .buttons {
-    width: 630px;
+    width: 94%;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    
 }
 
 .xml-preview-box {
