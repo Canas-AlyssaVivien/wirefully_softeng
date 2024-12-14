@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import left from '../CSS/left.png';
 import right from '../CSS/right.png';
 import blu from '../CSS/1blu.png';
+import loading from '../CSS/loading.gif';
 
 import { gsap } from 'gsap';
 
@@ -25,7 +26,7 @@ function Dashboard() {
     const htmlPreviewRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showXML, setShowXML] = useState(false);
-    const { user, token, logout} = useAuth();
+    const {token, logout} = useAuth();
     const navigate = useNavigate();
 
     const logoRef = useRef(null);
@@ -326,8 +327,7 @@ function Dashboard() {
                         <h1 className='history-h1'>History</h1>
                         {isLoadingg ? (
                             <div className="spinner-container">
-                                <div className="loader">
-                                </div>
+                                <img src={loading} alt="Cute Animated Emoticon" className="emoticon" />
                             </div>
                         ) : Array.isArray(history) && history.length === 0 ? (
                             <p className='nw'>No History Available</p>
@@ -405,14 +405,7 @@ function Dashboard() {
                         <div className="output-box">
                         {isLoading ? (
                                <div className="horizontal-spinner-container">
-                               <div className="loadd">
-                                    <div id="first">
-                                        <div id="second">
-                                            <div id="third">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               <img src={loading} alt="Cute Animated Emoticon" className="emoticon" />
                                 </div>
                             ) : showXML ? (
                                 <pre className="xml-content">

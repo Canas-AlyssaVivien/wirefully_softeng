@@ -56,7 +56,8 @@
 }
 
 .closer-button:hover {
-    color: #001F3F;
+    color: #cc0000;
+    transform: scale(1.2);
 }
 
 @keyframes fadeIn {
@@ -173,7 +174,6 @@
 }
 
 .query-button:hover {
-    background-color: #f0f0b8;
     color: black;
 }
 
