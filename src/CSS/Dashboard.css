@@ -483,7 +483,7 @@ h2 {
 }
 
 .close-button-container {
-    width: 100%;
+    /*width: 100%;*/
     align-items: flex-end;
     position: absolute;
     top: 10px;
@@ -632,7 +632,7 @@ h2 {
 }
 
 .clo-button-container {
-    width: 100%;
+    /*width: 100%;*/
     justify-items: right;
     align-items: flex-end;
     position: absolute;
@@ -648,7 +648,7 @@ h2 {
     cursor: pointer;
     transition: color 0.3s ease;
     margin-top: -5px;
-    margin-left: 490px;
+    margin-left: 435px;
 }
 
 .clo-button:hover {

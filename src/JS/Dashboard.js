@@ -177,45 +177,49 @@ function Dashboard() {
 
     const steps = [
         {
-            title: "Welcome to Wirefully!",
-            content: "Follow these guidelines to transform your use case diagrams to phone wireframes!",
+            "title": "Welcome to Wirefully!",
+            "content": "Follow these step-by-step guidelines to transform your use case diagrams into interactive phone wireframes!"
         },
         {
-            title: "Design Your Use Case Diagram",
-            content: "Enter the system name then add and modify use case notations in the editor. Be as specific as possible!",
+            "title": "Design Your Use Case Diagram",
+            "content": "Start by entering the system name, then add actors and use cases in the editor. Drag and drop elements to position them as needed. Be specific when describing actions!"
         },
         {
-            title: "Naming the Use Case Diagram Notations",
-            content: "To name the use case diagram notations, double click.",
+            "title": "Naming Use Case Diagram Notations",
+            "content": "Double-click on any actor or use case notation to name it. Use concise and meaningful labels that clearly represent the functionality or role."
         },
         {
-            title: "Selecting the Use Case Diagram Notations",
-            content: "When the actor notation is selected, it turns red. On the other hand, the use case notation will be outlined.",
+            "title": "Selecting Use Case Diagram Notations",
+            "content": "To select a notation, click on it. Actor notations turn red when selected, while use case notations are outlined for visibility."
         },
         {
-            title: "Connecting Use Case Diagram Notations",
-            content: "Select two notations to connect using association and broken lines.",
+            "title": "Creating Relationships Between Notations",
+            "content": "Select two notations (e.g., two use cases or an actor and a use case) and choose a relationship type using the buttons. Options include 'Include', 'Extend', and 'Generalization'."
         },
         {
-            title: "Deleting Use Case Diagram Notations",
-            content: "Select a use case diagram notation then click 'Delete'.",
+            "title": "Deleting Use Case Diagram Notations",
+            "content": "Select any use case or actor notation, then click 'X' to remove it. Use this option carefully, as deleted elements cannot be restored."
         },
         {
-            title: "Generate the Wireframe",
-            content: "Click the 'Generate' button and watch your wireframe come to life.",
+            "title": "Generate the Wireframe",
+            "content": "Once your use case diagram is complete, click 'Generate' to create the corresponding phone wireframe. The system will map your use cases into interactive wireframe components."
         },
         {
-            title: "Toggle Views",
-            content: "Use the 'XML' button to switch between wireframe and XML views.",
+            "title": "Toggle Between Views",
+            "content": "Use the 'XML' button to switch between the wireframe and the underlying XML code view. You can copy the XML code for integration purposes."
         },
         {
-            title: "Export Your Work",
-            content: "Save your wireframe with the use case diagram as an image by clicking the 'Export' button.",
+            "title": "Export Your Work",
+            "content": "Save your use case diagram and wireframe as an image by clicking the 'Export' button. This is useful for sharing with your team or integrating into documentation."
         },
         {
-            title: "You're All Set!",
-            content: "Enjoy using the wireframe generator. If you need help, click 'Guide' anytime!",
+            "title": "Helpful Tips",
+            "content": "Need guidance while designing? Click 'Guide' anytime to revisit these instructions. Remember, thoughtful use case diagrams lead to better wireframes!"
         },
+        {
+            "title": "You're All Set!",
+            "content": "Enjoy using Wirefully! Unlock the potential of your phone app ideas with ease."
+        }
     ];
 
     const toggleGuide = () => {
@@ -269,7 +273,7 @@ function Dashboard() {
                         </button>
                     </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
-                    <span ref={spanRef} className='Navbar-textt'>Hi, <span>{user.username}</span></span>
+                    <span ref={spanRef} className='Navbar-textt'>Hi, {/*<span>{user.username}</span> */}</span>
                 </div>
                 <div className='Navbar-right'>
                     <button onClick={toggleHistory} className='Navbar-text'>History</button>

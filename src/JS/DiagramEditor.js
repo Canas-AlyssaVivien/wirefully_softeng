@@ -485,7 +485,7 @@ const DiagramEditor = ({onGenerate}) => {
         <div className='toolbar-buttons'>
           <button className="buttona add-use-case">Use Case</button>
           <button className="buttona add-actor">Actor</button>
-          <button className="buttona add-sline">Association Line</button>
+          <button className="buttona add-sline">Generalization</button>
           <button className="buttona add-aline">Include</button>
           <button className="buttona add-bline">Exclude</button>
           <button className="buttonb delete">X</button>
