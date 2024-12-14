@@ -137,26 +137,58 @@ const DiagramEditor = ({onGenerate}) => {
       const text = 'New Use Case';
       const fontSize = 14;
       const padding = 15;
+      const lineHeight = fontSize + 2;
   
       const tempElement = document.createElement('canvas');
       const context = tempElement.getContext('2d');
-      context.font = `${fontSize}px Arial`; 
-      const textWidth = context.measureText(text).width;
+      context.font = `${fontSize}px Arial`;
   
-      const ellipseWidth = Math.max(textWidth + padding, 150);
-      const ellipseHeight = 80;
+      const ellipseWidth = 150; 
+      const maxTextWidth = ellipseWidth - padding * 2;
+  
+      const wrapText = (text, context, maxWidth) => {
+          const words = text.split(' ');
+          let lines = [];
+          let currentLine = '';
+  
+          for (const word of words) {
+              const testLine = currentLine ? `${currentLine} ${word}` : word;
+              const testWidth = context.measureText(testLine).width;
+  
+              if (testWidth > maxWidth) {
+                  if (currentLine) lines.push(currentLine);
+                  currentLine = word;
+              } else {
+                  currentLine = testLine;
+              }
+          }
+          if (currentLine) lines.push(currentLine); 
+          return lines;
+      };
+  
+      const lines = wrapText(text, context, maxTextWidth);
+  
+      const ellipseHeight = Math.max(80, lines.length * lineHeight + padding * 2);
   
       const ellipse = new joint.shapes.standard.Ellipse({
           position: { x: 100, y: 100 },
           size: { width: ellipseWidth, height: ellipseHeight },
           attrs: {
               body: { fill: '#3A6D8C', stroke: 'none' },
-              label: { text: text, fill: 'white', fontSize: fontSize }
+              label: {
+                  text: lines.join('\n'),
+                  fill: 'white',
+                  fontSize: fontSize,
+                  textAnchor: 'middle',
+                  textVerticalAnchor: 'middle',
+              },
           },
-          type: 'usecase'
+          type: 'usecase',
       });
-        ellipse.addTo(graph);
-    };
+  
+      ellipse.addTo(graph);
+  };  
+    
     
     const addActor = () => {
       const stickman = new joint.dia.Element({
@@ -463,16 +495,67 @@ const DiagramEditor = ({onGenerate}) => {
   const handleElementKeyDown = (e) => {
     if (e.key === 'Enter') {
         if (currentElement) {
-            if (currentElement.attr('label/text') !== undefined) {
-                currentElement.attr('label/text', inputValue);
-            } else if (currentElement.attr('.label/text') !== undefined) {
-                currentElement.attr('.label/text', inputValue);
+
+            if (currentElement.get('type') === 'usecase') {
+                const fontSize = 14; 
+                const padding = 15; 
+                const lineHeight = fontSize + 2; 
+
+                const tempElement = document.createElement('canvas');
+                const context = tempElement.getContext('2d');
+                context.font = `${fontSize}px Arial`;
+
+                const ellipseWidth = currentElement.size().width;
+                const maxTextWidth = ellipseWidth - padding * 2;
+
+                const wrapText = (text, context, maxWidth) => {
+                    const words = text.split(' ');
+                    let lines = [];
+                    let currentLine = '';
+
+                    for (const word of words) {
+                        const testLine = currentLine ? `${currentLine} ${word}` : word;
+                        const testWidth = context.measureText(testLine).width;
+
+                        if (testWidth > maxWidth) {
+                            if (currentLine) lines.push(currentLine);
+                            currentLine = word;
+                        } else {
+                            currentLine = testLine;
+                        }
+                    }
+                    if (currentLine) lines.push(currentLine); 
+                    return lines;
+                };
+
+                const lines = wrapText(inputValue, context, maxTextWidth);
+
+                const newEllipseHeight = Math.max(80, lines.length * lineHeight + padding * 2);
+                currentElement.resize(ellipseWidth, newEllipseHeight);
+
+                const wrappedText = lines.join('\n');
+                if (currentElement.attr('label/text') !== undefined) {
+                    currentElement.attr('label/text', wrappedText);
+                } else if (currentElement.attr('.label/text') !== undefined) {
+                    currentElement.attr('.label/text', wrappedText);
+                }
+            } 
+
+            else if (currentElement.get('type') === 'actor') {
+                if (currentElement.attr('label/text') !== undefined) {
+                    currentElement.attr('label/text', inputValue);
+                } else if (currentElement.attr('.label/text') !== undefined) {
+                    currentElement.attr('.label/text', inputValue);
+                }
             }
+
+            setIsInputVisible(false);
+            setInputValue('');
         }
-        setIsInputVisible(false);
-        setInputValue('');
     }
-  };
+};
+
+
 
   const closeModal = () => {
     setIsErrorVisible(false);
