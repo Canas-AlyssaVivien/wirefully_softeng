@@ -12,6 +12,7 @@ import left from '../CSS/left.png';
 import right from '../CSS/right.png';
 import blu from '../CSS/1blu.png';
 import loading from '../CSS/loading.gif';
+import output from '../CSS/output.png';
 
 import { gsap } from 'gsap';
 
@@ -274,7 +275,7 @@ function Dashboard() {
                         </button>
                     </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
-                    <span ref={spanRef} className='Navbar-textt'>Hi, {/*<span>{user.username}</span> */}</span>
+                    <span ref={spanRef} className='Navbar-textt'>Hi, <span>{user.username}</span></span>
                 </div>
                 <div className='Navbar-right'>
                     <button onClick={toggleHistory} className='Navbar-text'>History</button>
@@ -324,7 +325,6 @@ function Dashboard() {
                     <div className='clo-button-container'>
                         <button onClick={handleBackClick} className="clo-button">✖</button>
                     </div>
-                        <h1 className='history-h1'>History</h1>
                         {isLoadingg ? (
                             <div className="spinner-container">
                                 <img src={loading} alt="Cute Animated Emoticon" className="emoticon" />
@@ -413,7 +413,13 @@ function Dashboard() {
                                 </pre>
                             ) : (
                                 <div className="html-preview-content" ref={htmlPreviewRef}>
-                                    {htmlPreview ? parse(htmlPreview) : 'Create your own use case diagram'}
+                                    {htmlPreview ? parse(htmlPreview) 
+                                    : 
+                                        <div className='output-image-and-text'>
+                                            <img src={output} className='output-image' alt="Exported Output" />
+                                            <span>Create your use case diagram now!</span>
+                                        </div>
+                                    }
                                 </div>
                             )}
                         </div>
