@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import left from '../CSS/left.png';
 import right from '../CSS/right.png';
 import blu from '../CSS/1blu.png';
-import bleft from '../CSS/bleft.png';
 
 import { gsap } from 'gsap';
 
@@ -41,7 +40,7 @@ function Dashboard() {
     const handleGenerate = async (diagramData, SystemName) => {
         setIsLoading(true);
         try {
-            const response = await fetch("http://localhost:8000/generate-content", {
+            const response = await fetch("https://wirefully-backend0.onrender.com/generate-content", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +64,7 @@ function Dashboard() {
                     timestamp: new Date().toLocaleString(),  
                 };
     
-                await fetch("http://localhost:8000/save-history", {
+                await fetch("https://wirefully-backend0.onrender.com/save-history", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -88,7 +87,7 @@ function Dashboard() {
     
     const fetchHistory = async () => {
         try {
-            const response = await fetch("http://localhost:8000/get-history", {
+            const response = await fetch("https://wirefully-backend0.onrender.com/get-history", {
                 headers: {
                     "Authorization": `Bearer ${token}`,  
                 },

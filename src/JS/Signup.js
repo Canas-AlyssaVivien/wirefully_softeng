@@ -45,7 +45,7 @@ const Signup = () => {
 
         const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
         if (!passwordPattern.test(userDetails.password)) {
-            setError('Password must be at least 8 characters long and contain both letters and numbers.');
+            setError('Password must be at least 8 characters long and contains characters, special characters and numbers.');
             return;
         }
 
@@ -57,7 +57,7 @@ const Signup = () => {
         setIsLoading(true);
 
         try {
-            await axios.post('http://localhost:8000/signup', userDetails);
+            await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
             navigate('/login');
             //await axios.post('https://wirefully-backend0.onrender.com/signup', userDetails);
         } catch (err) {
