@@ -27,7 +27,7 @@ function Dashboard() {
     const htmlPreviewRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showXML, setShowXML] = useState(false);
-    const {token, logout} = useAuth();
+    const {user, token, logout} = useAuth();
     const navigate = useNavigate();
 
     const logoRef = useRef(null);
