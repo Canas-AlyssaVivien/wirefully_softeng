@@ -368,7 +368,7 @@ const DiagramEditor = ({onGenerate}) => {
               },
                 attrs: {
                     text: {
-                    text: '<<exclude>>',
+                    text: '<<extend>>',
                     fill: '#001F3F',
                     fontSize: 12,
                     fontFamily: 'Arial, sans-serif',
@@ -570,7 +570,7 @@ const DiagramEditor = ({onGenerate}) => {
           <button className="buttona add-actor">Actor</button>
           <button className="buttona add-sline">Generalization</button>
           <button className="buttona add-aline">Include</button>
-          <button className="buttona add-bline">Exclude</button>
+          <button className="buttona add-bline">Extend</button>
           <button className="buttonb delete">X</button>
         </div>
 
