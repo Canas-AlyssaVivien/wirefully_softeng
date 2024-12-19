@@ -457,13 +457,6 @@ const DiagramEditor = ({onGenerate}) => {
           console.log("Selected: " + selectedElements);
         }
       }
-      /*if (isSelected) {
-        selectedElements.current = selectedElements.current.filter(({ id }) => id !== element.id);
-        element.attr('body/stroke', 'none');
-      } else {
-        selectedElements.current.push({ id: element.id, element });
-        element.attr('body/stroke', '#001F3F');
-      }*/
     });
 
     const toolbar = document.getElementById('toolbar');

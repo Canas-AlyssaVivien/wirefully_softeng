@@ -131,36 +131,33 @@ function Dashboard() {
             : null;
     
         if (htmlPreviewCanvas && diagramCanvas) {
-            const margin = 50; // Padding around the combined canvas
+            const margin = 50;
             const maxHeight = Math.max(htmlPreviewCanvas.height, diagramCanvas.height);
-            const combinedWidth = htmlPreviewCanvas.width + diagramCanvas.width + 50; // Add padding between the images
+            const combinedWidth = htmlPreviewCanvas.width + diagramCanvas.width + 50;
     
-            // Calculate new canvas dimensions with extra padding
             const canvasWidth = combinedWidth + margin * 2;
             const canvasHeight = maxHeight + margin * 2;
     
             const combinedCanvas = document.createElement('canvas');
             const context = combinedCanvas.getContext('2d');
     
-            // Set the canvas size with added padding
             combinedCanvas.width = canvasWidth;
             combinedCanvas.height = canvasHeight;
     
-            // Fill the background with a color
-            context.fillStyle = "#03045e"; // Background color
+            context.fillStyle = "#03045e"; 
             context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
     
-            // Add a border (optional)
-            context.strokeStyle = "#ffffff"; // Border color
-            context.lineWidth = 5; // Border width
+            
+            context.strokeStyle = "#ffffff"; 
+            context.lineWidth = 5; 
             context.strokeRect(0, 0, combinedCanvas.width, combinedCanvas.height);
     
-            const wireframeX = margin; // Start drawing after padding
-            const wireframeY = (canvasHeight - htmlPreviewCanvas.height) / 2; // Center vertically
+            const wireframeX = margin; 
+            const wireframeY = (canvasHeight - htmlPreviewCanvas.height) / 2; 
             context.drawImage(htmlPreviewCanvas, wireframeX, wireframeY, htmlPreviewCanvas.width, htmlPreviewCanvas.height);
     
-            const diagramX = wireframeX + htmlPreviewCanvas.width + 50; // Add padding between images
-            const diagramY = (canvasHeight - diagramCanvas.height) / 2; // Center vertically
+            const diagramX = wireframeX + htmlPreviewCanvas.width + 50; 
+            const diagramY = (canvasHeight - diagramCanvas.height) / 2; 
             context.drawImage(diagramCanvas, diagramX, diagramY, diagramCanvas.width, diagramCanvas.height);
     
             const combinedImage = combinedCanvas.toDataURL('image/png');
@@ -268,12 +265,6 @@ function Dashboard() {
         <div className='Whole-Page'>
             <div className="User-NavBar">
                 <div className="NavBar-left">
-                    {/* <button ref={backRef} className='Dashboard-Back-container'  onClick={handleBackClick}>
-                        <img src={bleft} />
-                        <button type="button" className="Dashboard-Back-button">
-                            Back
-                        </button>
-                    </button> */}
                     <img ref={logoRef} src={logo} className="App-logo" alt="logo" />
                     <span ref={spanRef} className='Navbar-textt'>Hi, <span>{user.username}</span></span>
                 </div>
